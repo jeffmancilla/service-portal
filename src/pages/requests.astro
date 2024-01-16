@@ -1,0 +1,13 @@
+---
+import CombinedRequestForm from '@/components/portal/combined-request-form'
+import Promos from '@/components/portal/promos'
+import Portal from '@/layouts/portal.astro'
+---
+
+<Portal>
+	<div class="container">
+		<h1>intro heading</h1>
+		<Promos client:only />
+		<CombinedRequestForm client:only />
+	</div>
+</Portal>

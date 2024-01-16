@@ -1,0 +1,39 @@
+---
+import '@/styles/globals.css'
+import Header from '@/components/portal/header'
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Equipment Service Portal</title>
+	</head>
+	<body class="flex flex-col gap-8">
+		<Header client:only />
+		<main class="flex-grow">
+			<slot />
+		</main>
+		<footer class="self-center">
+			<div>
+				<span> JeffM was here! Built with Astro</span>
+			</div>
+			<div>
+				<a>Agent login</a>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		width: min(85vw, 85ch);
+		margin: 0 auto;
+		height: 100svh;
+	}
+</style>
