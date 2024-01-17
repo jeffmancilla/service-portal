@@ -1,13 +1,9 @@
 ---
-import CombinedRequestForm from '@/components/portal/combined-request-form'
-import Promos from '@/components/portal/promos'
+import RequestsByState from '@/components/portal/requests-by-state'
 import Portal from '@/layouts/portal.astro'
 ---
 
 <Portal>
-	<div class="container">
-		<h1>intro heading</h1>
-		<Promos client:only />
-		<CombinedRequestForm client:only />
-	</div>
+<h2>My Requests</h2>
+<RequestsByState client:only/>
 </Portal>

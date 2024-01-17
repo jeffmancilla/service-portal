@@ -10,30 +10,38 @@ import Header from '@/components/portal/header'
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Equipment Service Portal</title>
 	</head>
-	<body class="flex flex-col gap-8">
-		<Header client:only />
-		<main class="flex-grow">
-			<slot />
-		</main>
-		<footer class="self-center">
-			<div>
-				<span> JeffM was here! Built with Astro</span>
-			</div>
-			<div>
-				<a>Agent login</a>
-			</div>
-		</footer>
+	<body>
+		<div class="container">
+			<Header client:only />
+			<main class="flex-grow">
+				<slot />
+			</main>
+			<footer class="self-center">
+				<div>
+					<span> JeffM was here! Built with Astro</span>
+				</div>
+				<div>
+					<a>Agent login</a>
+				</div>
+			</footer>
+		</div>
 	</body>
+
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		.container {
+			margin: 0 auto;
+			height: 100svh;
+			padding-block: 1rem;
+			width: min(90vw, 75ch);
+			margin: 0 auto;
+
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+	</style>
 </html>
-
-<style>
-	* {
-		box-sizing: border-box;
-	}
-
-	body {
-		width: min(85vw, 85ch);
-		margin: 0 auto;
-		height: 100svh;
-	}
-</style>

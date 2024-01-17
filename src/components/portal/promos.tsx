@@ -11,9 +11,9 @@ const Promos = () => {
 		<div className="max-w-fit mx-auto">
 			<Carousel>
 				<CarouselContent>
-					<CarouselItem>...</CarouselItem>
-					<CarouselItem>...</CarouselItem>
-					<CarouselItem>...</CarouselItem>
+					<CarouselItem>promo one</CarouselItem>
+					<CarouselItem>promo two</CarouselItem>
+					<CarouselItem>promo three</CarouselItem>
 				</CarouselContent>
 				<CarouselPrevious />
 				<CarouselNext />

@@ -1,0 +1,10 @@
+---
+import Portal from '@/layouts/portal.astro'
+
+import RequestDetails from '@/components/portal/request-details'
+---
+
+<Portal>
+	<h2>Request Details</h2>
+	<RequestDetails client:only />
+</Portal>
