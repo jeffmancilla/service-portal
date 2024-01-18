@@ -7,7 +7,9 @@ const Portal = () => {
 			<Tabs defaultValue="account" className="w-[400px]">
 				<TabsList>
 					<TabsTrigger value="account">Repair weapon</TabsTrigger>
-					<TabsTrigger value="password">Password</TabsTrigger>
+					<TabsTrigger value="password" disabled>
+						Enchant item (coming soon)
+					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="account">
 					Make changes to your account here.
