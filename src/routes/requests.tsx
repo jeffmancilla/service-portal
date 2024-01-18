@@ -6,11 +6,16 @@ import {
 } from '@/components/ui/accordion'
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
+
+import { useUser } from "@clerk/clerk-react";
+
+
 const Requests = () => {
 	const tasks = useQuery(api.tasks.get)
 	const users = useQuery(api.users.get)
 	const items = useQuery(api.items.get)
-	console.log(items)
+	const user = useUser();
+	console.log(user)
 
 	return (
 		<Accordion type="single" defaultValue="item-1" collapsible>

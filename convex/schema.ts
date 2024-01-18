@@ -4,10 +4,13 @@ import { v } from 'convex/values'
 export default defineSchema({
 	users: defineTable({
 		name: v.string(),
-		role: v.array(v.string()),
-	}),
+		email: v.string(),
+		role: v.optional(v.array(v.string())),
+		tokenIdentifier: v.string(),
+	}).index('by_token', ['tokenIdentifier']),
+
 	items: defineTable({
-		level: v.float64(),
+		level: v.number(),
 		name: v.string(),
 		owner: v.id('users'),
 		type: v.string(),
@@ -17,5 +20,5 @@ export default defineSchema({
 		customer: v.id('users'),
 		item: v.id('items'),
 		type: v.string(),
-	}).index("customer", ["customer"]),
+	}).index('customer', ['customer']),
 })

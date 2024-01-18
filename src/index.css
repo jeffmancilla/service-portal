@@ -81,6 +81,9 @@
   margin: auto;
 }
 
+.hover-opacity {
+  color: hsl(var(--muted-foreground));
+}
 .hover-opacity:hover {
-  color: var(--muted);
+  color: hsl(var(--foreground));
 }
