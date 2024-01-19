@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import TaskCreate from '@/components/task-create'
+import RepairTaskCreate from '@/components/task-repair-create'
 
 const Portal = () => {
 	return (
@@ -12,9 +13,9 @@ const Portal = () => {
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="repair">
-					<TaskCreate />
+					<RepairTaskCreate />
 				</TabsContent>
-				<TabsContent value="enchant">Change your password here.</TabsContent>
+				<TabsContent value="enchant">Enchant thangs</TabsContent>
 			</Tabs>
 		</>
 	)

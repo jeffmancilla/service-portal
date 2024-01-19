@@ -9,7 +9,7 @@ import useStoreUserEffect from "@/hooks/useStoreUserEffect"
 import { Id } from "@convex/_generated/dataModel"
 
 type Message = {
-	from: string
+	from: Id<"users">
 	task: Id<"tasks">
 	text: string
 }
@@ -21,7 +21,7 @@ const MessageCreate = ({ taskId }: { taskId: Id<"tasks"> }) => {
 	const { register, handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
-		data.from = userId as string
+		data.from = userId
 		createMessage(data as Message)
 	})
 

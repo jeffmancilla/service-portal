@@ -1,4 +1,3 @@
-import { Id } from "./_generated/dataModel"
 import { query, mutation } from "./_generated/server"
 import { v } from "convex/values"
 
@@ -16,14 +15,14 @@ export const getFromTask = query({
 
 export const createFromTask = mutation({
 	args: {
-		from: v.string(),
+		from: v.id("users"),
 		task: v.id("tasks"),
 		text: v.string(),
 	},
 	handler: async (ctx, args) => {
 		const newItem = await ctx.db.insert("messages", {
-			from: args.from as Id<"users">,
-			task: args.task as Id<"tasks">,
+			from: args.from,
+			task: args.task,
 			text: args.text,
 		})
 		return newItem
