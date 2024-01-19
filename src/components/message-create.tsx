@@ -1,63 +1,39 @@
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 
 import { useForm } from "react-hook-form"
 import { api } from "@convex/_generated/api"
 import { useMutation } from "convex/react"
 import useStoreUserEffect from "@/hooks/useStoreUserEffect"
+import { Id } from "@convex/_generated/dataModel"
 
-type Item = {
-	name: string
-	level: string
-	type: string
-	owner: string
+type Message = {
+	from: string
+	task: Id<"tasks">
+	text: string
 }
 
-const MessageCreate = () => {
+const MessageCreate = ({ taskId }: { taskId: Id<"tasks"> }) => {
 	const userId = useStoreUserEffect()
 
-	const createItem = useMutation(api.items.create)
+	const createMessage = useMutation(api.messages.createFromTask)
 	const { register, handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
-		data.owner = userId as string
-		const item = data as Item
-		createItem(item)
+		data.from = userId as string
+		createMessage(data as Message)
 	})
 
 	return (
 		<>
 			<form onSubmit={onSubmit}>
-				<div className="grid w-full max-w-sm items-center gap-1.5">
-					<Label htmlFor="name">Name</Label>
-					<Input
-						{...register("name")}
-						type="name"
-						id="email"
-						placeholder="Rapier"
-					/>
-				</div>
-				<div className="grid w-full max-w-sm items-center gap-1.5">
-					<Label htmlFor="level">Level</Label>
-					<Input
-						{...register("level")}
-						type="number"
-						id="level"
-						placeholder="0"
-						min="0"
-						max="8"
-					/>
-				</div>
+				<input {...register("task")} name="task" value={taskId} hidden />
 				<div>
-					<Label htmlFor="type">Weapon type</Label>
-					<select className="block mb-4" {...register("type")}>
-						<option value="slashing">Slashing</option>
-						<option value="striking">Striking</option>
-						<option value="piercing">Piercing</option>
-					</select>
+					<Label htmlFor="type">Add message</Label>
+					<Textarea {...register("text")} />
 				</div>
-				<Button type="submit">Add weapon</Button>
+				<Button type="submit">Send</Button>
 			</form>
 		</>
 	)
