@@ -4,6 +4,9 @@ import { v } from "convex/values"
 export const get = query({
 	args: { owner: v.optional(v.id("users")) },
 	handler: async (ctx, args?) => {
+		// if (args === null) {
+		// 	return
+		// }
 		return await ctx.db
 			.query("items")
 			.filter((q) => q.eq(q.field("owner"), args?.owner))

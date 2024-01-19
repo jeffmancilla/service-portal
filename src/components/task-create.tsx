@@ -9,17 +9,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card"
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select"
 
 import { useForm, SubmitHandler } from "react-hook-form"
 import useStoreUserEffect from "@/hooks/useStoreUserEffect"
-import { useQuery } from "convex/react"
+import { useMutation, useQuery } from "convex/react"
 import { api } from "@convex/_generated/api"
 
 import ItemCreate from "./item-create"
@@ -31,34 +24,37 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog"
 import { useState } from "react"
+import { Id } from "@convex/_generated/dataModel"
 
 type FormValues = {
-	owner: string
-	name: string
-	level: number | null
-	type: "slashing" | "striking" | "piercing"
+	item: Id<"items">
+	customer: Id<"users">
+	type: string
 }
 
 const TaskCreate = () => {
+	const userId = useStoreUserEffect() as Id<"users">
 	const [open, setOpen] = useState(false)
 
-	const userId = useStoreUserEffect()
-
-	const items = useQuery(api.items.get, {
-		owner: "jh7cwxfyaymk84j8qt0hvqmfk16hryss",
-	})
-
-	const { handleSubmit } = useForm<FormValues>()
-	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		console.log("submit data", data)
-		data.owner = "jh7cwxfyaymk84j8qt0hvqmfk16hryss"
-	}
-
-	const handleWeaponChange = (select: HTMLFormElement) => {
+	const handleWeaponChange = (select: any) => {
 		if (select.value === "add") {
-			select.reset()
+			setOpen(!open)
+			select.value = ""
 		}
 	}
+	const userIdObj = userId ? { owner: userId } : {}
+
+	const items = useQuery(api.items.get, userIdObj)
+
+	const createTask = useMutation(api.tasks.create)
+	const { register, handleSubmit } = useForm()
+
+	const onSubmit = handleSubmit((data: any) => {
+		data.customer = userId!
+		data.type = "repair"
+		console.log(data)
+		createTask(data)
+	})
 
 	return (
 		<>
@@ -70,12 +66,15 @@ const TaskCreate = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form onSubmit={handleSubmit(onSubmit)}>
+					<form onSubmit={onSubmit}>
 						<div className="flex flex-col gap-4">
 							<div>
 								<Dialog open={open} onOpenChange={setOpen}>
 									<Label>Weapon to repair</Label>
-									<select onChange={(e) => handleWeaponChange(e.target)}>
+									<select
+										{...register("item")}
+										onChange={(e) => handleWeaponChange(e.target)}
+									>
 										<option value="">-select one-</option>
 										{items?.map(({ _id, name, level }) => (
 											<option value={_id}>
@@ -86,21 +85,6 @@ const TaskCreate = () => {
 											add weapon
 										</option>
 									</select>
-									{/* <Select onValueChange={(e) => handleOpen(e)}>
-										<SelectTrigger>
-											<SelectValue placeholder="Select weapon" />
-										</SelectTrigger>
-										<SelectContent>
-											{items?.map(({ _id, name, level }) => (
-												<SelectItem value={_id}>
-													{name} {level ? `+${level}` : null}
-												</SelectItem>
-											))}
-											<SelectItem value="add" className="text-muted-foreground">
-												Add weapon
-											</SelectItem>
-										</SelectContent>
-									</Select> */}
 									<DialogContent className="w-[320px]">
 										<DialogHeader>
 											<DialogTitle>New Weapon</DialogTitle>
@@ -113,7 +97,7 @@ const TaskCreate = () => {
 								</Dialog>
 							</div>
 							<div>
-								<Label>Additional Comments</Label>
+								<Label>Describe the state of your weapon</Label>
 								<Textarea placeholder="pet drake chewed out the hilt" />
 							</div>
 

@@ -24,6 +24,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-router": "^1.4.6",
     "@tanstack/router-devtools": "^1.4.6",
+    "@xixixao/uploadstuff": "^0.0.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "convex": "^1.8.0",

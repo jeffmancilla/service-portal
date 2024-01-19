@@ -52,7 +52,7 @@ const ItemCreate = () => {
 				</div>
 				<div>
 					<Label htmlFor="type">Weapon type</Label>
-					<select className="block mb-4" id="pet-select" {...register("type")}>
+					<select className="block mb-4" {...register("type")}>
 						<option value="slashing">Slashing</option>
 						<option value="striking">Striking</option>
 						<option value="piercing">Piercing</option>

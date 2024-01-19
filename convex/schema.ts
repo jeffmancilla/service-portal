@@ -16,7 +16,7 @@ export default defineSchema({
 		type: v.string(),
 	}),
 	tasks: defineTable({
-		agent: v.string(),
+		agent: v.optional(v.string()),
 		customer: v.id("users"),
 		item: v.id("items"),
 		type: v.string(),

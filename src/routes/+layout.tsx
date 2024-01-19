@@ -1,12 +1,12 @@
-import useStoreUserEffect from '../hooks/useStoreUserEffect'
-import { Outlet, Link } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import useStoreUserEffect from "../hooks/useStoreUserEffect"
+import { Outlet, Link } from "@tanstack/react-router"
+// import { TanStackRouterDevtools } from "@tanstack/router-devtools"
 
-import { SignInButton, UserButton } from '@clerk/clerk-react'
-import { Authenticated, Unauthenticated, AuthLoading } from 'convex/react'
+import { SignInButton, UserButton } from "@clerk/clerk-react"
+import { Authenticated, Unauthenticated, AuthLoading } from "convex/react"
 
-import { Toaster } from '@/components/ui/toaster'
-import { useToast } from '@/components/ui/use-toast'
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/components/ui/use-toast"
 
 const Layout = () => {
 	const userId = useStoreUserEffect()
@@ -35,14 +35,13 @@ const Layout = () => {
 					</nav>
 				</header>
 				<main className="flex-grow">
-					<Outlet />
-				</main>
+					{userId ? <Outlet /> : null}</main>
 				<footer className="py-2 text-center">
 					JeffM was here. Built using vite, react, convex, tailwind, shadcn
 					<button
 						onClick={() => {
 							toast({
-								title: 'Greetings, adventurer!',
+								title: "Greetings, adventurer!",
 								description: `Stored user ID: ${userId}`,
 							})
 						}}
@@ -52,7 +51,7 @@ const Layout = () => {
 				</footer>
 			</div>
 			<Toaster />
-			<TanStackRouterDevtools />
+			{/* <TanStackRouterDevtools /> */}
 		</>
 	)
 }
