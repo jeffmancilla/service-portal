@@ -74,3 +74,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.main-layout {
+  height: 100svh;
+  width: min(90vw, 80ch);
+  margin: auto;
+}
+.drawer {
+  width: min(90vw, 50ch);
+  margin: auto;
+}
