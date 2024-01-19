@@ -1,12 +1,22 @@
-import { query, mutation } from './_generated/server'
+import { query, mutation } from "./_generated/server"
+import { v } from "convex/values"
 
 export const get = query({
-	args: {},
-	handler: async (ctx) => {
-		return await ctx.db.query('users').collect()
+	args: { userId: v.optional(v.id("users")) },
+	handler: async (ctx, args) => {
+		return await ctx.db
+			.query("users")
+			.filter((q) => q.eq(q.field("_id"), args.userId))
+			.collect()
 	},
 })
+export const getOne = query({
+	args: { userId: v.id("users") },
+	handler: async (ctx, args) => {
+		return await await ctx.db.get(args.userId);
 
+	},
+})
 /**
  * Insert or update the user in a Convex table then return the document's ID.
  *
@@ -24,14 +34,14 @@ export const store = mutation({
 	handler: async (ctx) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {
-			throw new Error('Called storeUser without authentication present')
+			throw new Error("Called storeUser without authentication present")
 		}
 
 		// Check if we've already stored this identity before.
 		const user = await ctx.db
-			.query('users')
-			.withIndex('by_token', (q) =>
-				q.eq('tokenIdentifier', identity.tokenIdentifier)
+			.query("users")
+			.withIndex("by_token", (q) =>
+				q.eq("tokenIdentifier", identity.tokenIdentifier)
 			)
 			.unique()
 		if (user !== null) {
@@ -42,7 +52,7 @@ export const store = mutation({
 			return user._id
 		}
 		// If it's a new identity, create a new `User`.
-		return await ctx.db.insert('users', {
+		return await ctx.db.insert("users", {
 			name: identity.name!,
 			email: identity.email!,
 			tokenIdentifier: identity.tokenIdentifier,

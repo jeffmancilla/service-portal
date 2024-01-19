@@ -31,11 +31,11 @@ type Task = {
 	item: Id<"items">
 	state: string
 	type: string
-	comment: string
+	description: string
 }
 
-const TaskCreate = () => {
-	const [open, setOpen] = useState(false)
+const RepairTaskCreate = () => {
+const [open, setOpen] = useState(false)
 
 	const userId = useStoreUserEffect()
 	const userIdObj = userId ? { user: userId } : {}
@@ -48,6 +48,7 @@ const TaskCreate = () => {
 		data.type = "Repair"
 		data.state = "New"
 		const task = data as Task
+		console.log(task)
 
 		try {
 			createTask(task)
@@ -106,7 +107,7 @@ const TaskCreate = () => {
 							<div>
 								<Label>Describe the state of your weapon</Label>
 								<Textarea
-									{...register("item")}
+									{...register("description")}
 									placeholder="pet drake chewed out the hilt"
 								/>
 							</div>
@@ -122,4 +123,4 @@ const TaskCreate = () => {
 		</>
 	)
 }
-export default TaskCreate
+export default RepairTaskCreate
