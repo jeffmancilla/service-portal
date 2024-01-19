@@ -1,102 +1,66 @@
-'use client'
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { useForm } from "react-hook-form"
+import { api } from "@convex/_generated/api"
+import { useMutation } from "convex/react"
+import useStoreUserEffect from "@/hooks/useStoreUserEffect"
+import { Id } from "@convex/_generated/dataModel"
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-	FormDescription,
-} from '@/components/ui/form'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { toast } from '@/components/ui/use-toast'
-
-const FormSchema = z.object({
-	name: z.string(),
-	type: z.enum(['slashing', 'striking', 'piercing'], {
-		required_error: 'sum ting wong.',
-	}),
-})
+type Item = {
+	name: string
+	type: string
+	level: string
+	owner?: Id<"users">
+}
 
 const ItemCreate = () => {
-	const form = useForm<z.infer<typeof FormSchema>>({
-		resolver: zodResolver(FormSchema),
+	const userId = useStoreUserEffect()
+	
+	const createItem = useMutation(api.items.create)
+	const { register, handleSubmit } = useForm()
+	
+	const onSubmit = handleSubmit((data: any) => {
+		data.owner = userId!
+		console.log(data)
+		createItem(data)
 	})
 
-	function onSubmit(data: z.infer<typeof FormSchema>) {
-		toast({
-			title: 'Item added',
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(data, null, 2)}</code>
-				</pre>
-			),
-		})
-	}
-
 	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-                <h4 className='font-bold'>Item</h4>
-				<FormField
-					control={form.control}
-					name="name"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Name</FormLabel>
-							<FormControl>
-								<Input placeholder="longsword" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="type"
-					render={({ field }) => (
-						<FormItem className="space-y-3">
-							<FormLabel>Type</FormLabel>
-							<FormControl>
-								<RadioGroup
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-									className="flex flex-col space-y-1"
-								>
-									<FormItem className="flex items-center space-x-3 space-y-0">
-										<FormControl>
-											<RadioGroupItem value="slashing" />
-										</FormControl>
-										<FormLabel className="font-normal">Slashing</FormLabel>
-									</FormItem>
-									<FormItem className="flex items-center space-x-3 space-y-0">
-										<FormControl>
-											<RadioGroupItem value="striking" />
-										</FormControl>
-										<FormLabel className="font-normal">Striking</FormLabel>
-									</FormItem>
-									<FormItem className="flex items-center space-x-3 space-y-0">
-										<FormControl>
-											<RadioGroupItem value="piercing" />
-										</FormControl>
-										<FormLabel className="font-normal">Piercing</FormLabel>
-									</FormItem>
-								</RadioGroup>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button type="submit">Submit</Button>
+		<>
+			<form onSubmit={onSubmit}>
+				<div className="grid w-full max-w-sm items-center gap-1.5">
+					<Label htmlFor="name">Name</Label>
+					<Input
+						{...register("name")}
+						type="name"
+						id="email"
+						placeholder="Rapier"
+					/>
+				</div>
+				<div className="grid w-full max-w-sm items-center gap-1.5">
+					<Label htmlFor="level">Level</Label>
+					<Input
+						{...register("level")}
+						type="number"
+						id="level"
+						placeholder="0"
+						min="0"
+						max="8"
+					/>
+				</div>
+				<div>
+					<Label htmlFor="type">Weapon type</Label>
+					<select className="block mb-4" id="pet-select" {...register("type")}>
+						<option value="slashing">Slashing</option>
+						<option value="striking">Striking</option>
+						<option value="piercing">Piercing</option>
+					</select>
+				</div>
+				<Button type="submit">Add weapon</Button>
 			</form>
-		</Form>
+		</>
 	)
 }
 

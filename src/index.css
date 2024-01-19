@@ -80,10 +80,7 @@
   width: min(90vw, 80ch);
   margin: auto;
 }
-
-.hover-opacity {
-  color: hsl(var(--muted-foreground));
-}
-.hover-opacity:hover {
-  color: hsl(var(--foreground));
+.drawer {
+  width: min(90vw, 50ch);
+  margin: auto;
 }

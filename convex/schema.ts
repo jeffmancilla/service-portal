@@ -1,5 +1,5 @@
-import { defineSchema, defineTable } from 'convex/server'
-import { v } from 'convex/values'
+import { defineSchema, defineTable } from "convex/server"
+import { v } from "convex/values"
 
 export default defineSchema({
 	users: defineTable({
@@ -7,18 +7,25 @@ export default defineSchema({
 		email: v.string(),
 		role: v.optional(v.array(v.string())),
 		tokenIdentifier: v.string(),
-	}).index('by_token', ['tokenIdentifier']),
+	}).index("by_token", ["tokenIdentifier"]),
 
 	items: defineTable({
 		level: v.number(),
 		name: v.string(),
-		owner: v.id('users'),
+		owner: v.id("users"),
 		type: v.string(),
 	}),
 	tasks: defineTable({
 		agent: v.string(),
-		customer: v.id('users'),
-		item: v.id('items'),
+		customer: v.id("users"),
+		item: v.id("items"),
 		type: v.string(),
-	}).index('customer', ['customer']),
+	}).index("customer", ["customer"]),
+
+	messages: defineTable({
+		from: v.id("users"),
+		task: v.optional(v.id("tasks")),
+		text: v.string(),
+		to: v.optional(v.id("users")),
+	}),
 })

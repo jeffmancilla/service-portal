@@ -3,18 +3,16 @@ import {
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
-} from '@/components/ui/accordion'
-import { useQuery } from 'convex/react'
-import { api } from '../../convex/_generated/api'
+} from "@/components/ui/accordion"
+import { useQuery } from "convex/react"
+import { api } from "../../convex/_generated/api"
 
-import { useUser } from "@clerk/clerk-react";
-
+import { useUser } from "@clerk/clerk-react"
 
 const Requests = () => {
 	const tasks = useQuery(api.tasks.get)
 	const users = useQuery(api.users.get)
-	const items = useQuery(api.items.get)
-	const user = useUser();
+	const user = useUser()
 	console.log(user)
 
 	return (
@@ -35,13 +33,6 @@ const Requests = () => {
 						<div key={_id}>
 							<div>
 								{name}, {role}
-							</div>
-						</div>
-					))}
-					{items?.map(({ _id, name, level, type }) => (
-						<div key={_id}>
-							<div>
-								{name} +{level} ({type})
 							</div>
 						</div>
 					))}

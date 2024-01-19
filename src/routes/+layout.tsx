@@ -10,7 +10,6 @@ import { useToast } from '@/components/ui/use-toast'
 
 const Layout = () => {
 	const userId = useStoreUserEffect()
-	console.log(userId)
 	const { toast } = useToast()
 
 	return (
@@ -23,21 +22,10 @@ const Layout = () => {
 						</Link>
 						<div className="flex items-center gap-4">
 							<Authenticated>
-								<Link
-									to="/requests"
-									className="hover-opacity [&.active]:font-bold"
-								>
+								<Link to="/requests" className="[&.active]:font-bold">
 									My Requests
 								</Link>
 								<UserButton afterSignOutUrl="./" />
-								<button
-									onClick={() => {
-										toast({
-											title: 'First login',
-											description: `Stored user ID: ${userId}`,
-										})
-									}}
-								>toast</button>
 							</Authenticated>
 							<Unauthenticated>
 								<SignInButton mode="modal" />
@@ -51,10 +39,20 @@ const Layout = () => {
 				</main>
 				<footer className="py-2 text-center">
 					JeffM was here. Built using vite, react, convex, tailwind, shadcn
+					<button
+						onClick={() => {
+							toast({
+								title: 'Greetings, adventurer!',
+								description: `Stored user ID: ${userId}`,
+							})
+						}}
+					>
+						toast
+					</button>
 				</footer>
-				<TanStackRouterDevtools />
 			</div>
 			<Toaster />
+			<TanStackRouterDevtools />
 		</>
 	)
 }
