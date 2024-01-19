@@ -8,6 +8,8 @@ import { useQuery } from "convex/react"
 import { api } from "../../convex/_generated/api"
 import useStoreUserEffect from "@/hooks/useStoreUserEffect"
 import { Id } from "@convex/_generated/dataModel"
+import MessageCreate from "../components/message-create"
+import MessageList from "@/components/message-list"
 
 const Requests = () => {
 	const userId = useStoreUserEffect() as Id<"users">
@@ -17,7 +19,7 @@ const Requests = () => {
 	return (
 		<Accordion type="single" collapsible>
 			{tasks?.map(({ _id, item, agent, type, state, _creationTime }) => (
-				<AccordionItem key={_id} value="{_id}">
+				<AccordionItem key={_id} value={_id}>
 					<AccordionTrigger>
 						{item} ({type})
 					</AccordionTrigger>
@@ -35,6 +37,8 @@ const Requests = () => {
 							<span className="font-medium">Assigned: </span>
 							{agent ? agent : "unassigned"}
 						</div>
+						<MessageList taskId={_id} />
+						<MessageCreate taskId={_id} />
 					</AccordionContent>
 				</AccordionItem>
 			))}
