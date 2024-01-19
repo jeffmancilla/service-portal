@@ -1,3 +1,4 @@
+import { Id } from "./_generated/dataModel"
 import { query, mutation } from "./_generated/server"
 import { v } from "convex/values"
 
@@ -16,14 +17,14 @@ export const create = mutation({
 		name: v.string(),
 		level: v.string(),
 		type: v.string(),
-		owner: v.id("users"),
+		owner: v.string(),
 	},
 	handler: async (ctx, args) => {
 		const newItem = await ctx.db.insert("items", {
 			name: args.name,
 			level: parseInt(args.level),
 			type: args.type,
-			owner: args.owner,
+			owner: args.owner as Id<"users">,
 		})
 		return newItem
 	},

@@ -6,18 +6,23 @@ import { useForm } from "react-hook-form"
 import { api } from "@convex/_generated/api"
 import { useMutation } from "convex/react"
 import useStoreUserEffect from "@/hooks/useStoreUserEffect"
-import { Doc } from "@convex/_generated/dataModel"
 
-const ItemCreate = () => {
+type Item = {
+	name: string
+	level: string
+	type: string
+	owner: string
+}
+
+const MessageCreate = () => {
 	const userId = useStoreUserEffect()
 
 	const createItem = useMutation(api.items.create)
 	const { register, handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
-		const item = { ...data }
-		item.owner = userId!
-		console.log(item)
+		data.owner = userId as string
+		const item = data as Item
 		createItem(item)
 	})
 
@@ -58,4 +63,4 @@ const ItemCreate = () => {
 	)
 }
 
-export default ItemCreate
+export default MessageCreate

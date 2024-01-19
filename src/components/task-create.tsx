@@ -10,7 +10,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card"
 
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import useStoreUserEffect from "@/hooks/useStoreUserEffect"
 import { useMutation, useQuery } from "convex/react"
 import { api } from "@convex/_generated/api"
@@ -26,9 +26,10 @@ import {
 import { useState } from "react"
 import { Id } from "@convex/_generated/dataModel"
 
-type FormValues = {
-	item: Id<"items">
-	customer: Id<"users">
+type Task = {
+	customer: string
+	item: string
+	state: string
 	type: string
 }
 
@@ -41,12 +42,12 @@ const TaskCreate = () => {
 
 	const createTask = useMutation(api.tasks.create)
 	const { register, handleSubmit } = useForm()
-	const onSubmit = handleSubmit((data: any) => {
-		data.customer = userId!
+	const onSubmit = handleSubmit((data) => {
+		data.customer = userId as string
 		data.type = "Repair"
 		data.state = "New"
-		console.log(data)
-		createTask(data)
+		const task = data as Task
+		createTask(task)
 	})
 
 	const handleWeaponChange = (select: HTMLSelectElement) => {
