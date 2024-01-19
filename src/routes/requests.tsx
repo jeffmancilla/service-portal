@@ -12,14 +12,7 @@ import MessageCreate from "../components/message-create"
 import MessageList from "@/components/message-list"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-
-const DateOptions = {
-	weekday: 'long',
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
-  };
-  
+ 
 
 const Requests = () => {
 	const userId = useStoreUserEffect() as Id<"users">

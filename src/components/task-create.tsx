@@ -31,7 +31,7 @@ type Task = {
 	item: Id<"items">
 	state: string
 	type: string
-	comment: string
+	description: string
 }
 
 const TaskCreate = () => {
