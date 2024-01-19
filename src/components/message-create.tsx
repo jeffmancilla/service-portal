@@ -1,87 +1,61 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card"
-import { useForm, SubmitHandler } from "react-hook-form"
-import useStoreUserEffect from "@/hooks/useStoreUserEffect"
-import { useToast } from "./ui/use-toast"
-import { api } from "../../convex/_generated/api"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
+import { useForm } from "react-hook-form"
+import { api } from "@convex/_generated/api"
 import { useMutation } from "convex/react"
-import { Id } from "../../convex/_generated/dataModel"
+import useStoreUserEffect from "@/hooks/useStoreUserEffect"
+import { Doc } from "@convex/_generated/dataModel"
 
-type FormValues = {
-	name: string
-	level: string
-	type: "slashing" | "striking" | "piercing"
-	owner: Id<"users">
-}
-
-const MessageCreate = () => {
+const ItemCreate = () => {
 	const userId = useStoreUserEffect()
-	const { toast } = useToast()
-	const createItem = useMutation(api.message.create)
 
-	const { register, handleSubmit } = useForm<FormValues>()
-	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		data.owner = userId!
-		console.log("submit data", data)
-		toast({
-			title: "Submission details",
-			description: JSON.stringify(data),
-		})
-		createItem({
-			name: data.name,
-			level: data.level,
-			owner: data.owner,
-			type: data.type,
-		})
-	}
+	const createItem = useMutation(api.items.create)
+	const { register, handleSubmit } = useForm()
+
+	const onSubmit = handleSubmit((data) => {
+		const item = { ...data }
+		item.owner = userId!
+		console.log(item)
+		createItem(item)
+	})
 
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="flex flex-col gap-4">
-					<div className="flex justify-between gap-2">
-						<div className="flex-grow">
-							<Label>Name</Label>
-							<Input placeholder="longsword" {...register("name")} />
-						</div>
-						<div>
-							<Label>Level</Label>
-							<Input type="number" min="1" max="8" {...register("level")} />
-						</div>
-					</div>
-					<div>
-						<Label>Type</Label>
-						<RadioGroup className="flex flex-col" {...register("type")}>
-							<div className="mt-1 flex gap-2 items-center">
-								<RadioGroupItem value="slashing" />
-								<Label className="font-normal">Slashing</Label>
-							</div>
-							<div className="flex gap-2 items-center">
-								<RadioGroupItem value="striking" />
-								<Label className="font-normal">Striking</Label>
-							</div>
-							<div className="flex gap-2 items-center">
-								<RadioGroupItem value="piercing" />
-								<Label className="font-normal">Piercing</Label>
-							</div>
-						</RadioGroup>
-					</div>
-					<div>
-						<Button type="submit">Submit</Button>
-					</div>
+			<form onSubmit={onSubmit}>
+				<div className="grid w-full max-w-sm items-center gap-1.5">
+					<Label htmlFor="name">Name</Label>
+					<Input
+						{...register("name")}
+						type="name"
+						id="email"
+						placeholder="Rapier"
+					/>
 				</div>
+				<div className="grid w-full max-w-sm items-center gap-1.5">
+					<Label htmlFor="level">Level</Label>
+					<Input
+						{...register("level")}
+						type="number"
+						id="level"
+						placeholder="0"
+						min="0"
+						max="8"
+					/>
+				</div>
+				<div>
+					<Label htmlFor="type">Weapon type</Label>
+					<select className="block mb-4" {...register("type")}>
+						<option value="slashing">Slashing</option>
+						<option value="striking">Striking</option>
+						<option value="piercing">Piercing</option>
+					</select>
+				</div>
+				<Button type="submit">Add weapon</Button>
 			</form>
 		</>
 	)
 }
-export default MessageCreate
+
+export default ItemCreate

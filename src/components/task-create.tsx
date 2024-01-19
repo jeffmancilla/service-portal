@@ -33,28 +33,28 @@ type FormValues = {
 }
 
 const TaskCreate = () => {
-	const userId = useStoreUserEffect() as Id<"users">
 	const [open, setOpen] = useState(false)
 
-	const handleWeaponChange = (select: any) => {
+	const userId = useStoreUserEffect() as Id<"users">
+	const userIdObj = userId ? { user: userId } : {}
+	const items = useQuery(api.items.get, userIdObj)
+
+	const createTask = useMutation(api.tasks.create)
+	const { register, handleSubmit } = useForm()
+	const onSubmit = handleSubmit((data: any) => {
+		data.customer = userId!
+		data.type = "Repair"
+		data.state = "New"
+		console.log(data)
+		createTask(data)
+	})
+
+	const handleWeaponChange = (select: HTMLSelectElement) => {
 		if (select.value === "add") {
 			setOpen(!open)
 			select.value = ""
 		}
 	}
-	const userIdObj = userId ? { owner: userId } : {}
-
-	const items = useQuery(api.items.get, userIdObj)
-
-	const createTask = useMutation(api.tasks.create)
-	const { register, handleSubmit } = useForm()
-
-	const onSubmit = handleSubmit((data: any) => {
-		data.customer = userId!
-		data.type = "repair"
-		console.log(data)
-		createTask(data)
-	})
 
 	return (
 		<>

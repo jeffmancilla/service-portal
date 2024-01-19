@@ -20,6 +20,7 @@ export default defineSchema({
 		customer: v.id("users"),
 		item: v.id("items"),
 		type: v.string(),
+		state: v.string(),
 	}).index("customer", ["customer"]),
 
 	messages: defineTable({

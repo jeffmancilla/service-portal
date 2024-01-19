@@ -6,40 +6,39 @@ import {
 } from "@/components/ui/accordion"
 import { useQuery } from "convex/react"
 import { api } from "../../convex/_generated/api"
-
-import { useUser } from "@clerk/clerk-react"
+import useStoreUserEffect from "@/hooks/useStoreUserEffect"
+import { Id } from "@convex/_generated/dataModel"
 
 const Requests = () => {
-	const tasks = useQuery(api.tasks.get)
-	const users = useQuery(api.users.get)
-	const user = useUser()
-	console.log(user)
+	const userId = useStoreUserEffect() as Id<"users">
+	const userIdObj = userId ? { user: userId } : {}
+	const tasks = useQuery(api.tasks.get, userIdObj)
 
 	return (
-		<Accordion type="single" defaultValue="item-1" collapsible>
-			<AccordionItem value="item-1">
-				<AccordionTrigger>Is it accessible?</AccordionTrigger>
-				<AccordionContent>
-					{tasks?.map(({ _id, item, agent, type, _creationTime }) => (
-						<div key={_id}>
-							<h4>
-								{type}: {item}
-							</h4>
-							{agent ? <div>Assigned {agent}</div> : null}
-							<div>{_creationTime}</div>
+		<Accordion type="single" collapsible>
+			{tasks?.map(({ _id, item, agent, type, state, _creationTime }) => (
+				<AccordionItem key={_id} value="{_id}">
+					<AccordionTrigger>
+						{item} ({type})
+					</AccordionTrigger>
+
+					<AccordionContent>
+						<div>
+							<span className="font-medium">Created: </span>
+							{_creationTime}
 						</div>
-					))}
-					{users?.map(({ _id, name, role }) => (
-						<div key={_id}>
-							<div>
-								{name}, {role}
-							</div>
+						<div>
+							<span className="font-medium">State: </span>
+							{state}
 						</div>
-					))}
-				</AccordionContent>
-			</AccordionItem>
+						<div>
+							<span className="font-medium">Assigned: </span>
+							{agent ? agent : "unassigned"}
+						</div>
+					</AccordionContent>
+				</AccordionItem>
+			))}
 		</Accordion>
 	)
 }
-
 export default Requests

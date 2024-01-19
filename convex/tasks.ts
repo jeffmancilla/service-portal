@@ -2,9 +2,12 @@ import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
 
 export const get = query({
-	args: {},
-	handler: async (ctx) => {
-		return await ctx.db.query("tasks").collect()
+	args: { user: v.optional(v.id("users")) },
+	handler: async (ctx, args) => {
+		return await ctx.db
+			.query("tasks")
+			.filter((q) => q.eq(q.field("customer"), args.user))
+			.collect()
 	},
 })
 
@@ -13,13 +16,10 @@ export const create = mutation({
 		customer: v.id("users"),
 		item: v.id("items"),
 		type: v.string(),
+		state: v.string(),
 	},
 	handler: async (ctx, args) => {
-		const newItem = await ctx.db.insert("tasks", {
-			customer: args.customer,
-			item: args.item,
-			type: args.type,
-		})
+		const newItem = await ctx.db.insert("tasks", { ...args })
 		return newItem
 	},
 })

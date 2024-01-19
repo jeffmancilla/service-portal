@@ -2,14 +2,11 @@ import { query, mutation } from "./_generated/server"
 import { v } from "convex/values"
 
 export const get = query({
-	args: { owner: v.optional(v.id("users")) },
-	handler: async (ctx, args?) => {
-		// if (args === null) {
-		// 	return
-		// }
+	args: { user: v.optional(v.id("users")) },
+	handler: async (ctx, args) => {
 		return await ctx.db
 			.query("items")
-			.filter((q) => q.eq(q.field("owner"), args?.owner))
+			.filter((q) => q.eq(q.field("owner"), args.user))
 			.collect()
 	},
 })
