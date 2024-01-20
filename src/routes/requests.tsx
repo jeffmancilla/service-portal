@@ -13,7 +13,6 @@ import MessageList from "@/components/message-list"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
- 
 
 const Requests = () => {
 	const userId = useStoreUserEffect() as Id<"users">
@@ -23,12 +22,22 @@ const Requests = () => {
 	return (
 		<Accordion type="single" collapsible>
 			{tasks?.map(
-				({ _id, item, agent, type, state, description, _creationTime }) => (
+				({
+					_id,
+					itemLabel,
+					agent,
+					type,
+					state,
+					description,
+					_creationTime,
+				}) => (
 					<AccordionItem key={_id} value={_id}>
 						<AccordionTrigger className="flex-wrap">
-							<span>{new Date(_creationTime).toLocaleDateString()}</span>
-							<span>{item}</span>
-							<Badge>{type}</Badge>
+							<div className="flex gap-4">
+								<span className="font-light">{new Date(_creationTime).toLocaleDateString()}</span>
+								<span>{itemLabel}</span>
+								<Badge variant="secondary">{type}</Badge>
+							</div>
 						</AccordionTrigger>
 
 						<AccordionContent className="m-4">
@@ -49,7 +58,7 @@ const Requests = () => {
 								{description}
 							</div>
 							<MessageCreate taskId={_id} />
-							<Separator className="my-4"/>
+							<Separator className="my-4" />
 							<MessageList taskId={_id} />
 						</AccordionContent>
 					</AccordionItem>

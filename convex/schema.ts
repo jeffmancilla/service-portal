@@ -1,8 +1,6 @@
 import { defineSchema, defineTable } from "convex/server"
 import { v } from "convex/values"
 
-cd 
-
 export default defineSchema({
 	users: defineTable({
 		name: v.string(),
@@ -12,7 +10,7 @@ export default defineSchema({
 	}).index("by_token", ["tokenIdentifier"]),
 
 	items: defineTable({
-		level: v.number(),
+		level: v.optional(v.number()),
 		name: v.string(),
 		owner: v.id("users"),
 		type: v.string(),

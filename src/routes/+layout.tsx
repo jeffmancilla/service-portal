@@ -25,8 +25,8 @@ const Layout = () => {
 		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<div className="main-layout flex flex-col">
 				<header className="h-12 flex flex-wrap justify-between items-center">
-					<Link to="/" className="font-bold">
-						<h1>Equipment Services Portal</h1>
+					<Link to="/">
+						<h1 className="font-bold text-xl">Equipment Services Portal</h1>
 					</Link>
 					<nav className="flex items-center gap-4">
 						<div className="flex items-center gap-4">

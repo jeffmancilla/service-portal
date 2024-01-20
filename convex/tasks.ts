@@ -8,17 +8,23 @@ export const get = query({
 			.query("tasks")
 			.filter((q) => q.eq(q.field("customer"), args.user))
 			.collect()
-		console.log(tasks)
 		const items = await ctx.db
-			.query("tasks")
+			.query("items")
 			.filter((q) => q.eq(q.field("owner"), args.user))
 			.collect()
-		console.log(tasks)
-		tasks.map((task) => {
-			// get user names for each userId
+		const tasksWithItems = tasks.map((task) => {
+			const item = items.find((item) => item._id === task.item)
+      const itemLabel = item?.level ? `${item?.name} +${item?.level}` : item?.name 
+			return { ...task, itemLabel: itemLabel }
+			// const taskWithItems = {
+			//   ...task,
+			//   item: { displayName: `${item?.name} +${item?.level}`, ...item }
+			// }
+			// return taskWithItems
 		})
+		console.log(tasksWithItems)
 
-		return tasks
+		return tasksWithItems
 	},
 })
 
