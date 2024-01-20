@@ -12,6 +12,7 @@ import MessageCreate from "../components/message-create"
 import MessageList from "@/components/message-list"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
  
 
 const Requests = () => {
@@ -47,8 +48,9 @@ const Requests = () => {
 								<Label>Description: </Label>
 								{description}
 							</div>
-							<MessageList taskId={_id} />
 							<MessageCreate taskId={_id} />
+							<Separator className="my-4"/>
+							<MessageList taskId={_id} />
 						</AccordionContent>
 					</AccordionItem>
 				)

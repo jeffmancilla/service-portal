@@ -34,7 +34,7 @@ type Task = {
 	description: string
 }
 
-const TaskCreate = () => {
+const EnchantTaskCreate = () => {
 	const [open, setOpen] = useState(false)
 
 	const userId = useStoreUserEffect()
@@ -45,7 +45,7 @@ const TaskCreate = () => {
 	const { register, handleSubmit } = useForm()
 	const onSubmit = handleSubmit((data) => {
 		data.customer = userId
-		data.type = "Repair"
+		data.type = "Enchant"
 		data.state = "New"
 		const task = data as Task
 
@@ -67,7 +67,7 @@ const TaskCreate = () => {
 		<>
 			<Card>
 				<CardHeader>
-					<CardTitle>Repair Request</CardTitle>
+					<CardTitle>Enchant Weapon</CardTitle>
 					<CardDescription>
 						enter in and select your item add comment
 					</CardDescription>
@@ -75,34 +75,7 @@ const TaskCreate = () => {
 				<CardContent>
 					<form onSubmit={onSubmit}>
 						<div className="flex flex-col gap-4">
-							<div>
-								<Dialog open={open} onOpenChange={setOpen}>
-									<Label>Weapon to repair</Label>
-									<select
-										{...register("item")}
-										onChange={(e) => handleWeaponChange(e.target)}
-									>
-										<option value="">-select one-</option>
-										{items?.map(({ _id, name, level }) => (
-											<option key={_id} value={_id}>
-												{name} {level ? `+${level}` : null}
-											</option>
-										))}
-										<option className="text-muted-foreground" value="add">
-											add weapon
-										</option>
-									</select>
-									<DialogContent className="w-[320px]">
-										<DialogHeader>
-											<DialogTitle>New Weapon</DialogTitle>
-											<DialogDescription>
-												Register your weapon with us
-											</DialogDescription>
-											<ItemCreate />
-										</DialogHeader>
-									</DialogContent>
-								</Dialog>
-							</div>
+
 							<div>
 								<Label>Describe the state of your weapon</Label>
 								<Textarea
@@ -122,4 +95,4 @@ const TaskCreate = () => {
 		</>
 	)
 }
-export default TaskCreate
+export default EnchantTaskCreate

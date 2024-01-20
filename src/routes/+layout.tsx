@@ -24,7 +24,7 @@ const Layout = () => {
 	return (
 		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<div className="main-layout flex flex-col">
-				<header className="py-2 flex flex-wrap justify-between items-center">
+				<header className="h-12 flex flex-wrap justify-between items-center">
 					<Link to="/" className="font-bold">
 						<h1>Equipment Services Portal</h1>
 					</Link>
@@ -47,7 +47,7 @@ const Layout = () => {
 				<main className="flex-grow">
 					<Outlet />
 				</main>
-				<footer className="py-2 text-center">
+				<footer className="py-4 text-center">
 					JeffM was here. Built using vite, react, clerk, convex, tailwind,
 					shadcn
 				</footer>

@@ -26,16 +26,18 @@ const MessageCreate = ({ taskId }: { taskId: Id<"tasks"> }) => {
 	})
 
 	return (
-		<>
-			<form onSubmit={onSubmit}>
-				<input {...register("task")} name="task" value={taskId} hidden />
+		<form onSubmit={onSubmit}>
+			<input {...register("task")} name="task" value={taskId} hidden />
+			<div className="flex flex-col gap-2">
 				<div>
 					<Label htmlFor="type">Add message</Label>
 					<Textarea {...register("text")} />
 				</div>
-				<Button type="submit">Send</Button>
-			</form>
-		</>
+				<Button type="submit" className="self-end">
+					Send
+				</Button>
+			</div>
+		</form>
 	)
 }
 
