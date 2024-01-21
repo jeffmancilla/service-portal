@@ -13,8 +13,7 @@ export const get = query({
 export const getOne = query({
 	args: { userId: v.id("users") },
 	handler: async (ctx, args) => {
-		return await await ctx.db.get(args.userId);
-
+		return await await ctx.db.get(args.userId)
 	},
 })
 /**
@@ -56,6 +55,8 @@ export const store = mutation({
 			name: identity.name!,
 			email: identity.email!,
 			tokenIdentifier: identity.tokenIdentifier,
+			role: { customer: true, agent: false, admin: false},
+			active: true,
 		})
 	},
 })

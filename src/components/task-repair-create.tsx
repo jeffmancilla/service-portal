@@ -24,15 +24,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog"
 import { useState } from "react"
-import { Id } from "@convex/_generated/dataModel"
-
-type Task = {
-	customer: Id<"users">
-	item: Id<"items">
-	state: string
-	type: string
-	description: string
-}
+import { Doc } from "@convex/_generated/dataModel"
 
 const RepairTaskCreate = () => {
 const [open, setOpen] = useState(false)
@@ -44,16 +36,15 @@ const [open, setOpen] = useState(false)
 	const createTask = useMutation(api.tasks.create)
 	const { register, handleSubmit } = useForm()
 	const onSubmit = handleSubmit((data) => {
-		data.customer = userId
-		data.type = "Repair"
-		data.state = "New"
-		const task = data as Task
+		// data.customer = userId
+		data.type = "repair"
+		const task = data as Doc<"tasks">
 		console.log(task)
 
 		try {
 			createTask(task)
 		} catch (err) {
-			console.log(err)
+			console.error(err)
 		}
 	})
 

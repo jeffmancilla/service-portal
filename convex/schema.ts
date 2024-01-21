@@ -3,31 +3,46 @@ import { v } from "convex/values"
 
 export default defineSchema({
 	users: defineTable({
+		active: v.boolean(),
 		name: v.string(),
-		email: v.string(),
-		role: v.optional(v.array(v.string())),
 		tokenIdentifier: v.string(),
+		email: v.string(),
+		role: v.object({
+			customer: v.optional(v.boolean()),
+			agent: v.optional(v.boolean()),
+			admin: v.optional(v.boolean()),
+		}),
 	}).index("by_token", ["tokenIdentifier"]),
 
 	items: defineTable({
-		level: v.optional(v.number()),
+		active: v.boolean(),
 		name: v.string(),
+		level: v.optional(v.number()),
 		owner: v.id("users"),
-		type: v.string(),
+		type: v.union(
+			v.literal("slashing"),
+			v.literal("striking"),
+			v.literal("piercing")
+		),
 	}),
 	tasks: defineTable({
-		agent: v.optional(v.string()),
-		customer: v.id("users"),
+		active: v.boolean(),
+		type: v.union(v.literal("repair"), v.literal("enchant")),
 		item: v.id("items"),
-		type: v.string(),
-		state: v.string(),
 		description: v.string(),
-	}).index("customer", ["customer"]),
-
+		customer: v.id("users"),
+		agent: v.optional(v.id("users")),
+		state: v.union(
+			v.literal("open"),
+			v.literal("in progress"),
+			v.literal("completed"),
+			v.literal("cancelled")
+		),
+	}),
 	messages: defineTable({
+		active: v.boolean(),
 		from: v.id("users"),
-		task: v.optional(v.id("tasks")),
+		to: v.union(v.id("tasks"), v.id("users")),
 		text: v.string(),
-		to: v.optional(v.id("users")),
 	}),
 })

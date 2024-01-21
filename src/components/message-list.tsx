@@ -8,7 +8,7 @@ import { CalendarClock } from "lucide-react"
 
 const MessageList = ({ taskId }: { taskId: Id<"tasks"> }) => {
 	const userId = useStoreUserEffect()
-	const messages = useQuery(api.messages.getFromTask, { task: taskId })
+	const messages = useQuery(api.messages.getFromTask, { to: taskId })
 
 	const applyUserStyles = (id: Id<"users">) => {
 		if (id === userId) {
@@ -18,9 +18,9 @@ const MessageList = ({ taskId }: { taskId: Id<"tasks"> }) => {
 		}
 	}
 	return (
-		<div className="flex flex-col-reverse items-baseline gap-2">
+		<div className="flex flex-col items-baseline gap-2">
 			{messages?.map(({ _id, from, text, _creationTime }) => (
-				<Card key={_id} className={applyUserStyles(from)}>
+				<Card key={_id} className={`${applyUserStyles(from)}`}>
 					<div className="px-4 py-2">
 						<h4>{from}</h4>
 						<p>{text}</p>

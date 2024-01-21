@@ -6,18 +6,20 @@ import {
 } from "@/components/ui/accordion"
 import { useQuery } from "convex/react"
 import { api } from "../../convex/_generated/api"
-import useStoreUserEffect from "@/hooks/useStoreUserEffect"
-import { Id } from "@convex/_generated/dataModel"
 import MessageCreate from "../components/message-create"
 import MessageList from "@/components/message-list"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
 const Requests = () => {
-	const userId = useStoreUserEffect() as Id<"users">
-	const userIdObj = userId ? { user: userId } : {}
-	const tasks = useQuery(api.tasks.get, userIdObj)
+	const tasks = useQuery(api.tasks.getList)
 
 	return (
 		<Accordion type="single" collapsible>
@@ -32,34 +34,55 @@ const Requests = () => {
 					_creationTime,
 				}) => (
 					<AccordionItem key={_id} value={_id}>
-						<AccordionTrigger className="flex-wrap">
+						<AccordionTrigger className="">
 							<div className="flex gap-4">
-								<span className="font-light">{new Date(_creationTime).toLocaleDateString()}</span>
+								<span className="font-light">
+									{new Date(_creationTime).toLocaleDateString()}
+								</span>
 								<span>{itemLabel}</span>
 								<Badge variant="secondary">{type}</Badge>
 							</div>
 						</AccordionTrigger>
+						<AccordionContent className="flex flex-wrap gap-8">
+							<Card className="rounded-lg bg-secondary self-start flex-auto">
+								<CardHeader>
+									<CardTitle>Request details</CardTitle>
+									<Separator />
+								</CardHeader>
+								<CardContent>
+									<div className="mb-4">
+										<div>
+											<Label className="font-bold">State: </Label>
+											{state}
+										</div>
+										<div>
+											<Label className="font-bold">Assigned to: </Label>
+											{agent ? (
+												agent
+											) : (
+												<span className="text-muted-foreground">none</span>
+											)}
+										</div>
+									</div>
+									<div>
+										<Label className="font-bold">Description: </Label>
+										<p>{description}</p>
+									</div>
+									<div></div>
+								</CardContent>
+							</Card>
+							<Card className="rounded-lg bg-background flex-auto">
+								<CardHeader>
+									<CardTitle>Chat</CardTitle>
+									<Separator />
+								</CardHeader>
 
-						<AccordionContent className="m-4">
-							<div>
-								<Label>State: </Label>
-								{state}
-							</div>
-							<div>
-								<Label>Assigned to: </Label>
-								{agent ? (
-									agent
-								) : (
-									<span className="text-muted-foreground">none</span>
-								)}
-							</div>
-							<div>
-								<Label>Description: </Label>
-								{description}
-							</div>
-							<MessageCreate taskId={_id} />
-							<Separator className="my-4" />
-							<MessageList taskId={_id} />
+								<CardContent className="min-w-72">
+									<MessageList taskId={_id} />
+									<Separator className="my-2" />
+									<MessageCreate taskId={_id} />
+								</CardContent>
+							</Card>
 						</AccordionContent>
 					</AccordionItem>
 				)

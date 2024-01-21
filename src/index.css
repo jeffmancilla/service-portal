@@ -61,7 +61,7 @@
 
 .main-layout {
   height: 100svh;
-  width: min(90vw, 80ch);
+  width: min(85vw, 85ch);
   margin: auto;
 }
 .drawer {

@@ -1,32 +1,23 @@
-import useStoreUserEffect from "../hooks/useStoreUserEffect"
 import { Outlet, Link } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/router-devtools"
 
-import { SignInButton, UserButton } from "@clerk/clerk-react"
-import {
-	Authenticated,
-	Unauthenticated,
-	AuthLoading,
-	useQuery,
-} from "convex/react"
-import { api } from "@convex/_generated/api"
+import { UserButton } from "@clerk/clerk-react"
+import useStoreUserEffect from "../hooks/useStoreUserEffect"
+import { Authenticated } from "convex/react"
 
-import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle"
+import { Toaster } from "@/components/ui/toaster"
 
 const Layout = () => {
-	const userId = useStoreUserEffect()
-	const userArgs = userId ? { userId: userId } : "skip"
-	const user = useQuery(api.users.getOne, userArgs)
-	console.log(user)
+	useStoreUserEffect()
 
 	return (
 		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<div className="main-layout flex flex-col">
-				<header className="h-12 flex flex-wrap justify-between items-center">
+				<header className="py-4 flex flex-wrap justify-between items-center">
 					<Link to="/">
-						<h1 className="font-bold text-xl">Equipment Services Portal</h1>
+						<h1 className="font-bold text-xl">Smithing Service Portal</h1>
 					</Link>
 					<nav className="flex items-center gap-4">
 						<div className="flex items-center gap-4">
@@ -35,19 +26,19 @@ const Layout = () => {
 									My Requests
 								</Link>
 								<ModeToggle />
-								<UserButton afterSignOutUrl="./" />
+								<UserButton afterSignOutUrl="/index.html" />
 							</Authenticated>
-							<Unauthenticated>
+							{/* <Unauthenticated>
 								<SignInButton mode="modal" />
-							</Unauthenticated>
-							<AuthLoading>Still loading</AuthLoading>
+							</Unauthenticated> */}
+							{/* <AuthLoading>Still loading</AuthLoading> */}
 						</div>
 					</nav>
 				</header>
 				<main className="flex-grow">
 					<Outlet />
 				</main>
-				<footer className="py-4 text-center">
+				<footer className="py-4 text-center ">
 					JeffM was here. Built using vite, react, clerk, convex, tailwind,
 					shadcn
 				</footer>
