@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+	width: min(90vw, 80ch);
+	margin: auto;
+
+	display: flex;
+	flex-direction: column;
+}
+
+#root > * {
+    padding: 1rem;
+}
+
+nav > a:hover {
+    font-weight: bold;
+}
