@@ -24,18 +24,10 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog"
 import { useState } from "react"
-import { Id } from "@convex/_generated/dataModel"
-
-type Task = {
-	customer: Id<"users">
-	item: Id<"items">
-	state: string
-	type: string
-	description: string
-}
+import { Doc } from "@convex/_generated/dataModel"
 
 const EnchantTaskCreate = () => {
-	const [open, setOpen] = useState(false)
+const [open, setOpen] = useState(false)
 
 	const userId = useStoreUserEffect()
 	const userIdObj = userId ? { user: userId } : {}
@@ -44,15 +36,15 @@ const EnchantTaskCreate = () => {
 	const createTask = useMutation(api.tasks.create)
 	const { register, handleSubmit } = useForm()
 	const onSubmit = handleSubmit((data) => {
-		data.customer = userId
-		data.type = "Enchant"
-		data.state = "New"
-		const task = data as Task
+		// data.customer = userId
+		data.type = "repair"
+		const task = data as Doc<"tasks">
+		console.log(task)
 
 		try {
 			createTask(task)
 		} catch (err) {
-			console.log(err)
+			console.error(err)
 		}
 	})
 
@@ -67,7 +59,7 @@ const EnchantTaskCreate = () => {
 		<>
 			<Card>
 				<CardHeader>
-					<CardTitle>Enchant Weapon</CardTitle>
+					<CardTitle>Repair Request</CardTitle>
 					<CardDescription>
 						enter in and select your item add comment
 					</CardDescription>
@@ -75,11 +67,38 @@ const EnchantTaskCreate = () => {
 				<CardContent>
 					<form onSubmit={onSubmit}>
 						<div className="flex flex-col gap-4">
-
+							<div>
+								<Dialog open={open} onOpenChange={setOpen}>
+									<Label>Weapon to repair</Label>
+									<select
+										{...register("item")}
+										onChange={(e) => handleWeaponChange(e.target)}
+									>
+										<option value="">-select one-</option>
+										{items?.map(({ _id, name, level }) => (
+											<option key={_id} value={_id}>
+												{name} {level ? `+${level}` : null}
+											</option>
+										))}
+										<option className="text-muted-foreground" value="add">
+											add weapon
+										</option>
+									</select>
+									<DialogContent className="w-[320px]">
+										<DialogHeader>
+											<DialogTitle>New Weapon</DialogTitle>
+											<DialogDescription>
+												Register your weapon with us
+											</DialogDescription>
+											<ItemCreate />
+										</DialogHeader>
+									</DialogContent>
+								</Dialog>
+							</div>
 							<div>
 								<Label>Describe the state of your weapon</Label>
 								<Textarea
-									{...register("item")}
+									{...register("description")}
 									placeholder="pet drake chewed out the hilt"
 								/>
 							</div>
