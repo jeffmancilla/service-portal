@@ -1,13 +1,19 @@
-import { Authenticated, useMutation, useQuery } from "convex/react"
+import {
+	Authenticated,
+	Unauthenticated,
+	useMutation,
+	useQuery,
+} from "convex/react"
 import ItemCreate from "../components/item-create"
 import { api } from "../../convex/_generated/api"
 import { useForm } from "react-hook-form"
 import { Doc } from "../../convex/_generated/dataModel"
 import useStoreUserEffect from "../hooks/useStoreUserEffect"
+import { SignIn } from "@clerk/clerk-react"
 
 export default function Repair() {
 	const userId = useStoreUserEffect()
-	const queryArgsUser = userId ? {userId: userId} : "skip"
+	const queryArgsUser = userId ? { userId: userId } : "skip"
 	const items = useQuery(api.items.get, queryArgsUser)
 
 	const createTask = useMutation(api.tasks.create)
@@ -27,7 +33,7 @@ export default function Repair() {
 			dialog.close()
 		}
 	}
-	
+
 	return (
 		<>
 			<Authenticated>
@@ -95,6 +101,11 @@ export default function Repair() {
 					</div>
 				</div>
 			</Authenticated>
+			<Unauthenticated>
+				<dialog className="bg-transparent" open>
+					<SignIn />
+				</dialog>
+			</Unauthenticated>
 		</>
 	)
 }

@@ -6,15 +6,14 @@ export default function Portal() {
 	return (
 		<>
 			<div
-				className="hero min-h-screen"
+				className="hero"
 				style={{
 					backgroundImage:
 						"url(smithing-hero.jpg)",
-					backgroundBlendMode: "darken"
 				}}
 			>
-				<div className="hero-overlay bg-opacity-60"></div>
-				<div className="hero-content text-center text-neutral-content">
+				<div className="hero-overlay bg-opacity-75"></div>
+				<div className="py-16 hero-content text-center text-neutral-content">
 					<div className="max-w-md">
 						<h2 className="text-5xl font-bold mb-5 leading-tight">
 							Forge weapons.
@@ -37,7 +36,7 @@ export default function Portal() {
 				</div>
 			</div>
 			<Authenticated>
-			<hr className="my-10"/>
+			<hr className="my-8" />
 				<div className="flex flex-wrap gap-4 justify-center">
 					<div className="card w-80 bg-base-100 shadow-xl image-full">
 						<figure>
@@ -64,7 +63,7 @@ export default function Portal() {
 							<h2 className="card-title">Enchant</h2>
 							<p>Unlock rizzmaster status - magic, fire, lightning, holy enchants available</p>
 							<div className="card-actions justify-end">
-								<button className="btn btn-primary">Coming soon</button>
+								<button className="btn btn-ghost">Coming soon</button>
 							</div>
 						</div>
 					</div>

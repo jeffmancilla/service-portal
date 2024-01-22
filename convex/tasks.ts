@@ -53,6 +53,56 @@ export const get = query({
 	},
 })
 
+export const update = mutation({
+	args: {
+		taskId: v.id("tasks"),
+		active: v.optional(v.boolean()),
+		type: v.optional(v.union(v.literal("repair"), v.literal("enchant"))),
+		item: v.optional(v.id("items")),
+		customer: v.optional(v.id("users")),
+		description: v.optional(v.string()),
+		agent: v.optional(v.id("users")),
+		state: v.optional(
+			v.union(
+				v.literal("open"),
+				v.literal("in progress"),
+				v.literal("completed"),
+				v.literal("cancelled")
+			)
+		),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (identity === null) {
+			throw new Error("Unauthenticated call")
+		}
+		const user = await ctx.db
+			.query("users")
+			.withIndex("by_token", (q) =>
+				q.eq("tokenIdentifier", identity.tokenIdentifier)
+			)
+			.unique()
+		if (!user) {
+			throw new Error("user not found")
+		}
+		if (!user.role.agent) {
+			throw new Error("user does not have sufficient privileges")
+		}
+
+		const task = await ctx.db.get(args.taskId)
+		if (!task) {
+			throw new Error("task not found")
+		}
+		const argsWithoutTaskId = Object.fromEntries(
+			Object.entries(args).filter((e) => e[0] != "taskId")
+		)
+		return await ctx.db.patch(task._id, {
+			...argsWithoutTaskId,
+			updated: Number(new Date()),
+		})
+	},
+})
+
 export const getList = query({
 	args: { userId: v.optional(v.id("users")) },
 
@@ -77,7 +127,7 @@ export const getActive = query({
 	args: { userId: v.optional(v.id("users")) },
 
 	handler: async (ctx, args) => {
-		console.log('args',args)
+		console.log("args", args)
 		const tasks = await ctx.db
 			.query("tasks")
 			.filter((q) => q.eq(q.field("active"), true))
@@ -91,5 +141,66 @@ export const getActive = query({
 			return { ...task, itemLabel: itemLabel }
 		})
 		return tasksWithItems
+	},
+})
+export const getUnassigned = query({
+	args: { userId: v.optional(v.id("users")) },
+
+	handler: async (ctx, args) => {
+		console.log("args", args)
+		const tasks = await ctx.db
+			.query("tasks")
+			.filter((q) => q.eq(q.field("agent"), undefined))
+			.filter((q) => q.eq(q.field("active"), true))
+			.collect()
+		console.log(tasks)
+		const items = await ctx.db.query("items").collect()
+		const users = await ctx.db.query("users").collect()
+
+		const tasksWithNames = tasks.map((task) => {
+			const item = items.find((item) => item._id === task.item)
+			const customer = users.find((user) => user._id === task.customer)
+			const agent = users.find((user) => user._id === task.agent)
+
+			return {
+				...task,
+				itemName: item?.level ? `${item?.name} +${item?.level}` : item?.name,
+				customerName: customer?.name,
+				agentName: agent?.name,
+			}
+		})
+		console.log(tasksWithNames)
+		return tasksWithNames
+	},
+})
+
+export const getAssigned = query({
+	args: { userId: v.optional(v.id("users")) },
+
+	handler: async (ctx, args) => {
+		console.log("args", args)
+		const tasks = await ctx.db
+			.query("tasks")
+			.filter((q) => q.eq(q.field("agent"), args.userId))
+			.filter((q) => q.eq(q.field("active"), true))
+			.collect()
+		console.log(tasks)
+		const items = await ctx.db.query("items").collect()
+		const users = await ctx.db.query("users").collect()
+
+		const tasksWithNames = tasks.map((task) => {
+			const item = items.find((item) => item._id === task.item)
+			const customer = users.find((user) => user._id === task.customer)
+			const agent = users.find((user) => user._id === task.agent)
+
+			return {
+				...task,
+				itemName: item?.level ? `${item?.name} +${item?.level}` : item?.name,
+				customerName: customer?.name,
+				agentName: agent?.name,
+			}
+		})
+		console.log(tasksWithNames)
+		return tasksWithNames
 	},
 })

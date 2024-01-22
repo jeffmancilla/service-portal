@@ -17,9 +17,9 @@ export default function MessageSend({ taskId }: { taskId: Id<"tasks"> }) {
 			<textarea
 				{...register("text")}
 				className="textarea textarea-bordered w-full"
-				placeholder="enter message here"
+				placeholder="Message"
 			/>
-			<button type="submit" className="btn btn-primary self-end">
+			<button type="submit" className="btn btn-sm btn-primary self-end">
 				Send
 			</button>
 		</form>

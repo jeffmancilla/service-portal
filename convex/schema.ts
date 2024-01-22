@@ -38,6 +38,8 @@ export default defineSchema({
 			v.literal("completed"),
 			v.literal("cancelled")
 		),
+		updated: v.optional(v.number()),
+		updated_by: v.optional(v.id("users")),
 	}),
 	messages: defineTable({
 		active: v.boolean(),

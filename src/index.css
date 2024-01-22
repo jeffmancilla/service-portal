@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-	width: min(90vw, 80ch);
+	width: min(95vw, 85ch);
 	height: 100svh;
 	margin: auto;
 

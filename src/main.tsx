@@ -5,13 +5,15 @@ import { ConvexReactClient } from "convex/react"
 import { ClerkProvider, useAuth } from "@clerk/clerk-react"
 import { ConvexProviderWithClerk } from "convex/react-clerk"
 
+
+import "./index.css"
+
 import Root from "./routes/+root"
 import Error from "./routes/+error"
 import Requests from "./routes/requests"
 import Portal from "./routes/portal"
-
-import "./index.css"
 import Repair from "./routes/repair"
+import Dashboard from "./routes/dashboard"
 
 const router = createBrowserRouter([
 	{
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: "repair/",
 				element: <Repair />,
+			},
+			{
+				path: "agent/",
+				element: <Dashboard />,
 			},
 		],
 	},
