@@ -29,6 +29,7 @@ Service Portal was built with lots of ♥ and:
 1. clone this repo
 2. npm install
 3. set up a [Convex](https://www.convex.dev) account and follow their [Clerk guide](https://docs.convex.dev/auth/clerk) to set up auth
+4. npm run dev + npx convex dev 
 
 ## User flow
 - Customer
