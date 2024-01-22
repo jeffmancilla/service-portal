@@ -4,6 +4,7 @@
 
 #root {
 	width: min(90vw, 80ch);
+	height: 100svh;
 	margin: auto;
 
 	display: flex;

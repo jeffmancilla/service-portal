@@ -39,10 +39,12 @@ const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
-			<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-				<RouterProvider router={router} />
-			</ConvexProviderWithClerk>
-		</ClerkProvider>
+			<ClerkProvider
+				publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+			>
+				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+					<RouterProvider router={router} />
+				</ConvexProviderWithClerk>
+			</ClerkProvider>
 	</React.StrictMode>
 )

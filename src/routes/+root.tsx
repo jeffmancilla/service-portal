@@ -1,27 +1,36 @@
 import { UserButton } from "@clerk/clerk-react"
-import { Authenticated } from "convex/react"
+import { AuthLoading, Authenticated, Unauthenticated } from "convex/react"
 import { Link, Outlet } from "react-router-dom"
+import ThemeToggle from "../components/theme-toggle"
 
 export default function Root() {
 	return (
 		<>
-			<header className="flex justify-between items-center">
-				<Link to="/" className="font-bold">
+			<header className="flex justify-between gap-4 items-center">
+				<Link to="/" className="text-xl font-bold">
 					Smithing Services Portal
 				</Link>
-				<Authenticated>
-					<div className="flex justify-end gap-4 items-center">
+
+				<div className="flex justify-end gap-2 items-center">
+					<Authenticated>
 						<nav>
 							<Link to="/requests">Requests</Link>
 						</nav>
-						<UserButton />
-					</div>
-				</Authenticated>
+						<ThemeToggle />
+						<UserButton afterSignOutUrl="/" />
+					</Authenticated>
+					<Unauthenticated>
+						<ThemeToggle />
+					</Unauthenticated>
+					<AuthLoading>loading</AuthLoading>
+				</div>
 			</header>
-			<main>
+			<main className="flex-grow">
 				<Outlet />
 			</main>
-			<footer></footer>
+			<footer className="text-center text-base-300">
+				JeffM was here. Built with Vite + React + TailwindCSS + Convex + Clerk
+			</footer>
 		</>
 	)
 }

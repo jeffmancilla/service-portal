@@ -5,13 +5,38 @@ import { Link } from "react-router-dom"
 export default function Portal() {
 	return (
 		<>
-			<h2 className="text-5xl font-bold my-16 leading-tight">
-				Forge weapons.
-				<br />
-				Make shiny.
-				<br />
-				More happy.
-			</h2>
+			<div
+				className="hero min-h-screen"
+				style={{
+					backgroundImage:
+						"url(smithing-hero.jpg)",
+					backgroundBlendMode: "darken"
+				}}
+			>
+				<div className="hero-overlay bg-opacity-60"></div>
+				<div className="hero-content text-center text-neutral-content">
+					<div className="max-w-md">
+						<h2 className="text-5xl font-bold mb-5 leading-tight">
+							Forge weapons.
+							<br />
+							Make shiny.
+							<br />
+							More happy.
+						</h2>
+						<p className="mb-5">
+							Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+							excepturi exercitationem quasi. In deleniti eaque aut repudiandae
+							et a id nisi.
+						</p>
+						<Unauthenticated>
+							<button className="block mx-auto btn btn-primary">
+								<SignInButton mode="modal" />
+							</button>
+						</Unauthenticated>
+					</div>
+				</div>
+			</div>
+			<hr className="my-10"/>
 			<Authenticated>
 				<div className="flex flex-wrap gap-4 justify-center">
 					<div className="card w-80 bg-base-100 shadow-xl image-full">
@@ -19,7 +44,7 @@ export default function Portal() {
 							<img src="repair.png" alt="Repair" />
 						</figure>
 						<div className="card-body">
-							<h2 className="card-title">Repair weapon</h2>
+							<h2 className="card-title">Next-day repair service</h2>
 							<p>
 								Missed your target and hit a rock instead? We've got you
 								covered.
@@ -37,7 +62,7 @@ export default function Portal() {
 						</figure>
 						<div className="card-body">
 							<h2 className="card-title">Enchant</h2>
-							<p>We offer magic, fire, lightning and holy</p>
+							<p>Unlock rizzmaster status - magic, fire, lightning, holy enchants available</p>
 							<div className="card-actions justify-end">
 								<button className="btn btn-primary">Coming soon</button>
 							</div>
@@ -45,11 +70,6 @@ export default function Portal() {
 					</div>
 				</div>
 			</Authenticated>
-			<Unauthenticated>
-				<button className="btn btn-primary">
-					<SignInButton mode="modal" />
-				</button>
-			</Unauthenticated>
 			<AuthLoading>Still loading</AuthLoading>
 		</>
 	)
