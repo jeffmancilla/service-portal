@@ -1,57 +1,76 @@
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-
 import { useForm } from "react-hook-form"
-import { api } from "@convex/_generated/api"
+import { api } from "../../convex/_generated/api"
 import { useMutation } from "convex/react"
-import { Doc } from "@convex/_generated/dataModel"
+import { Doc } from "../../convex/_generated/dataModel"
+import { useState } from "react"
 
-const ItemCreate = () => {
+export default function ItemCreate() {
+	const [convexError, setConvexError] = useState("")
 	const createItem = useMutation(api.items.create)
 	const { register, handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
-		data.level = parseInt(data.level)
+		data.level = !data.level ? 0 : parseInt(data.level)
 		const item = data as Doc<"items">
-		createItem(item)
+		try {
+			createItem(item)
+		} catch (error) {
+			setConvexError(error as string)
+		}
 	})
 
 	return (
 		<>
-			<form onSubmit={onSubmit}>
-				<div className="grid w-full max-w-sm items-center gap-1.5">
-					<Label htmlFor="name">Name</Label>
-					<Input
+			<form onSubmit={onSubmit} className="flex flex-col gap-4">
+				<label className="form-control w-full ">
+					<div className="label">
+						<span className="label-text">Name</span>
+					</div>
+					<input
 						{...register("name")}
-						type="name"
-						id="email"
-						placeholder="Rapier"
+						type="text"
+						placeholder="Claymore"
+						className="input input-bordered w-full"
+						required
 					/>
+				</label>
+				<div className="flex gap-4">
+					<label className="flex-shrink form-control w-full ">
+						<div className="label">
+							<span className="label-text">Level</span>
+						</div>
+						<input
+							{...register("level")}
+							type="number"
+							id="level"
+							placeholder="0"
+							min="1"
+							max="8"
+							className="input input-bordered w-full"
+						/>
+					</label>
+					<label className="flex-grow form-control w-full ">
+						<div className="label">
+							<span className="label-text">Type</span>
+						</div>
+						<select
+							{...register("type")}
+							className="block select select-bordered w-full "
+							required
+						>
+							<option value="" disabled selected>
+								Select one
+							</option>
+							<option value="slashing">Slashing</option>
+							<option value="striking">Striking</option>
+							<option value="piercing">Piercing</option>
+						</select>
+					</label>
 				</div>
-				<div className="grid w-full max-w-sm items-center gap-1.5">
-					<Label htmlFor="level">Level</Label>
-					<Input
-						{...register("level")}
-						type="number"
-						id="level"
-						placeholder="0"
-						min="0"
-						max="8"
-					/>
-				</div>
-				<div>
-					<Label htmlFor="type">Weapon type</Label>
-					<select className="block mb-4" {...register("type")}>
-						<option value="slashing">Slashing</option>
-						<option value="striking">Striking</option>
-						<option value="piercing">Piercing</option>
-					</select>
-				</div>
-				<Button type="submit">Add weapon</Button>
+
+				<button className="place-self-end btn btn-outline">Add weapon</button>
+				<p className="text-error">{convexError}</p>
 			</form>
 		</>
 	)
 }
-
-export default ItemCreate

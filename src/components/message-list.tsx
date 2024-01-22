@@ -1,38 +1,45 @@
 import { useQuery } from "convex/react"
 import { api } from "../../convex/_generated/api"
-import useStoreUserEffect from "@/hooks/useStoreUserEffect"
-import { Id } from "@convex/_generated/dataModel"
-import { Card } from "@/components/ui/card"
+import { Id } from "../../convex/_generated/dataModel"
 import TimeAgo from "timeago-react"
-import { CalendarClock } from "lucide-react"
+import useStoreUserEffect from "../hooks/useStoreUserEffect"
 
-const MessageList = ({ taskId }: { taskId: Id<"tasks"> }) => {
+export default function MessageList({ taskId }: { taskId: Id<"tasks"> }) {
 	const userId = useStoreUserEffect()
 	const messages = useQuery(api.messages.getFromTask, { to: taskId })
+	console.log(messages)
 
-	const applyUserStyles = (id: Id<"users">) => {
+	const applyUserStyles = (div: string, id: Id<"users">) => {
 		if (id === userId) {
-			return "bg-primary text-primary-foreground self-end"
+			if (div === "chat") {
+				return "chat-end"
+			} else if (div === "chat-bubble") {
+				return "chat-bubble-primary"
+			}
 		} else {
-			return undefined
+			if (div === "chat") {
+				return "chat-start"
+			}
 		}
 	}
+
 	return (
-		<div className="flex flex-col items-baseline gap-2">
-			{messages?.map(({ _id, from, text, _creationTime }) => (
-				<Card key={_id} className={`${applyUserStyles(from)}`}>
-					<div className="px-4 py-2">
-						<h4>{from}</h4>
-						<p>{text}</p>
-						<div className={`flex gap-1 mt-1 text-xs ${applyUserStyles(from)}`}>
-							<CalendarClock size="1rem" />
+		<div className="flex flex-col gap-2">
+			{messages?.map(({ _id, from, fromName, text, _creationTime }) => (
+				<div key={_id} className={`chat ${applyUserStyles("chat", from)}`}>
+					<div className="chat-header">
+						{fromName}
+						<time className="ml-2 text-xs opacity-50">
 							<TimeAgo datetime={_creationTime} opts={{ minInterval: 60 }} />
-						</div>
+						</time>
 					</div>
-				</Card>
+					<div
+						className={`chat-bubble ${applyUserStyles("chat-bubble", from)}`}
+					>
+						{text}
+					</div>
+				</div>
 			))}
 		</div>
 	)
 }
-
-export default MessageList

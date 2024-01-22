@@ -68,14 +68,8 @@ export const getList = query({
 		if (!user) {
 			throw new Error("user not found")
 		}
-		const tasks = await ctx.db
-			.query("tasks")
-			.filter((q) => q.eq(q.field("customer"), user._id))
-			.collect()
-		const items = await ctx.db
-			.query("items")
-			.filter((q) => q.eq(q.field("owner"), user._id))
-			.collect()
+		const tasks = await ctx.db.query("tasks").collect()
+		const items = await ctx.db.query("items").collect()
 		const tasksWithItems = tasks.map((task) => {
 			const item = items.find((item) => item._id === task.item)
 			const itemLabel = !item?.level

@@ -9,10 +9,18 @@ export const getFromTask = query({
 		// text: v.string(),
 	},
 	handler: async (ctx, args) => {
-		return await ctx.db
+		const users = await ctx.db.query("users").collect()
+		const messages = await ctx.db
 			.query("messages")
 			.filter((q) => q.eq(q.field("to"), args.to))
 			.collect()
+		const messagesWithNames = messages.map((message) => {
+			console.log(message.from)
+			const from = users.find((user) => user._id === message.from)
+			console.log(from)
+			return { ...message, fromName: from?.name }
+		})
+		return messagesWithNames
 	},
 })
 
@@ -40,7 +48,7 @@ export const create = mutation({
 		const newItem = await ctx.db.insert("messages", {
 			from: user._id,
 			active: true,
-			...args
+			...args,
 		})
 		return newItem
 	},

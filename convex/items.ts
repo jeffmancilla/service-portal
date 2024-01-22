@@ -2,11 +2,23 @@ import { query, mutation } from "./_generated/server"
 import { v } from "convex/values"
 
 export const get = query({
-	args: { user: v.optional(v.id("users")) },
-	handler: async (ctx, args) => {
+	handler: async (ctx) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (identity === null) {
+			throw new Error("Unauthenticated call")
+		}
+		const user = await ctx.db
+			.query("users")
+			.withIndex("by_token", (q) =>
+				q.eq("tokenIdentifier", identity.tokenIdentifier)
+			)
+			.unique()
+		if (!user) {
+			throw new Error("user not found")
+		}
 		return await ctx.db
 			.query("items")
-			.filter((q) => q.eq(q.field("owner"), args.user))
+			.filter((q) => q.eq(q.field("owner"), user._id))
 			.collect()
 	},
 })
