@@ -37,7 +37,7 @@ export default defineSchema({
 			v.literal("in progress"),
 			v.literal("completed"),
 			v.literal("cancelled")
-		),
+		),	
 		updated: v.optional(v.number()),
 		updated_by: v.optional(v.id("users")),
 	}),

@@ -9,15 +9,15 @@ type UpdateTask = {
 	active: boolean
 }
 
-export default function TaskCancelButton({ taskId }: { taskId: Id<"tasks"> }) {
+export default function TaskCompleteButton({ taskId }: { taskId: Id<"tasks"> }) {
 	const updateTask = useMutation(api.tasks.update)
 	const { handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit(() => {
 		const data = {
 			taskId: taskId,
-			state: "cancelled",
-			active: false,
+			state: "completed",
+			active: false
 		}
 		updateTask(data as UpdateTask)
 	})
@@ -26,9 +26,9 @@ export default function TaskCancelButton({ taskId }: { taskId: Id<"tasks"> }) {
 		<form onSubmit={onSubmit}>
 			<button
 				type="submit"
-				className="btn btn-sm btn-outline btn-error self-end"
+				className="btn btn-sm btn-success self-end"
 			>
-				Cancel task
+				Complete task
 			</button>
 		</form>
 	)

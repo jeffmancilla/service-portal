@@ -7,7 +7,6 @@ import useStoreUserEffect from "../hooks/useStoreUserEffect"
 export default function MessageList({ taskId }: { taskId: Id<"tasks"> }) {
 	const userId = useStoreUserEffect()
 	const messages = useQuery(api.messages.getFromTask, { to: taskId })
-	console.log(messages)
 
 	const applyUserStyles = (div: string, id: Id<"users">) => {
 		if (id === userId) {

@@ -123,26 +123,6 @@ export const getList = query({
 	},
 })
 
-export const getActive = query({
-	args: { userId: v.optional(v.id("users")) },
-
-	handler: async (ctx, args) => {
-		console.log("args", args)
-		const tasks = await ctx.db
-			.query("tasks")
-			.filter((q) => q.eq(q.field("active"), true))
-			.collect()
-		const items = await ctx.db.query("items").collect()
-		const tasksWithItems = tasks.map((task) => {
-			const item = items.find((item) => item._id === task.item)
-			const itemLabel = !item?.level
-				? item?.name
-				: `${item?.name} +${item?.level}`
-			return { ...task, itemLabel: itemLabel }
-		})
-		return tasksWithItems
-	},
-})
 export const getUnassigned = query({
 	args: { userId: v.optional(v.id("users")) },
 
@@ -153,11 +133,10 @@ export const getUnassigned = query({
 			.filter((q) => q.eq(q.field("agent"), undefined))
 			.filter((q) => q.eq(q.field("active"), true))
 			.collect()
-		console.log(tasks)
 		const items = await ctx.db.query("items").collect()
 		const users = await ctx.db.query("users").collect()
 
-		const tasksWithNames = tasks.map((task) => {
+		const populatedTasks = tasks.map((task) => {
 			const item = items.find((item) => item._id === task.item)
 			const customer = users.find((user) => user._id === task.customer)
 			const agent = users.find((user) => user._id === task.agent)
@@ -169,8 +148,7 @@ export const getUnassigned = query({
 				agentName: agent?.name,
 			}
 		})
-		console.log(tasksWithNames)
-		return tasksWithNames
+		return populatedTasks
 	},
 })
 
@@ -184,11 +162,10 @@ export const getAssigned = query({
 			.filter((q) => q.eq(q.field("agent"), args.userId))
 			.filter((q) => q.eq(q.field("active"), true))
 			.collect()
-		console.log(tasks)
 		const items = await ctx.db.query("items").collect()
 		const users = await ctx.db.query("users").collect()
 
-		const tasksWithNames = tasks.map((task) => {
+		const populatedTasks = tasks.map((task) => {
 			const item = items.find((item) => item._id === task.item)
 			const customer = users.find((user) => user._id === task.customer)
 			const agent = users.find((user) => user._id === task.agent)
@@ -200,7 +177,34 @@ export const getAssigned = query({
 				agentName: agent?.name,
 			}
 		})
-		console.log(tasksWithNames)
-		return tasksWithNames
+		return populatedTasks
+	},
+})
+
+export const getInactive = query({
+	args: { userId: v.optional(v.id("users")) },
+
+	handler: async (ctx, args) => {
+		console.log("args", args)
+		const tasks = await ctx.db
+			.query("tasks")
+			.filter((q) => q.eq(q.field("active"), false))
+			.collect()
+		const items = await ctx.db.query("items").collect()
+		const users = await ctx.db.query("users").collect()
+
+		const populatedTasks = tasks.map((task) => {
+			const item = items.find((item) => item._id === task.item)
+			const customer = users.find((user) => user._id === task.customer)
+			const agent = users.find((user) => user._id === task.agent)
+
+			return {
+				...task,
+				itemName: item?.level ? `${item?.name} +${item?.level}` : item?.name,
+				customerName: customer?.name,
+				agentName: agent?.name,
+			}
+		})
+		return populatedTasks
 	},
 })

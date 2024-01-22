@@ -8,8 +8,7 @@ export default function Portal() {
 			<div
 				className="hero"
 				style={{
-					backgroundImage:
-						"url(smithing-hero.jpg)",
+					backgroundImage: "url(smithing-hero.jpg)",
 				}}
 			>
 				<div className="hero-overlay bg-opacity-75"></div>
@@ -23,9 +22,9 @@ export default function Portal() {
 							More happy.
 						</h2>
 						<p className="mb-5">
-							Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-							excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-							et a id nisi.
+							We used to be adventurers like you... then we all took an arrow in
+							the knee. Come forth with your bow and sword and allow us to live
+							vicariously through you.
 						</p>
 						<Unauthenticated>
 							<button className="block mx-auto btn btn-primary">
@@ -36,7 +35,7 @@ export default function Portal() {
 				</div>
 			</div>
 			<Authenticated>
-			<hr className="my-8" />
+				<hr className="my-8" />
 				<div className="flex flex-wrap gap-4 justify-center">
 					<div className="card w-80 bg-base-100 shadow-xl image-full">
 						<figure>
@@ -61,7 +60,10 @@ export default function Portal() {
 						</figure>
 						<div className="card-body">
 							<h2 className="card-title">Enchant</h2>
-							<p>Unlock rizzmaster status - magic, fire, lightning, holy enchants available</p>
+							<p>
+								Unlock rizzmaster status - magic, fire, lightning, holy enchants
+								available
+							</p>
 							<div className="card-actions justify-end">
 								<button className="btn btn-ghost">Coming soon</button>
 							</div>
@@ -69,7 +71,9 @@ export default function Portal() {
 					</div>
 				</div>
 			</Authenticated>
-			<AuthLoading>Still loading</AuthLoading>
+			<AuthLoading>
+				<span className="block my-5 mx-auto loading loading-dots loading-xs"></span>
+			</AuthLoading>
 		</>
 	)
 }

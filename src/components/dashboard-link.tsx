@@ -10,7 +10,7 @@ export default function DashboardLink() {
 
 	const renderDashboardLink = getUser?.role.agent ? (
 		<Link to="/agent">
-			Dashboard
+			Agent Dashboard
 		</Link>
 	) : undefined
 

@@ -12,7 +12,7 @@ export default {
 	daisyui: {
 		darkTheme: "luxury",
 		themes: [
-			"nord",
+			"retro",
 			"luxury",
 		],
 	},
