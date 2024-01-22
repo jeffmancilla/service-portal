@@ -15,7 +15,7 @@ export default function Dashboard() {
 	const inactiveTasks = useQuery(api.tasks.getInactive, ArgsUserId)
 
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-col gap-4">
 			<Authenticated>
 				<div className="card w-full bg-base-100 shadow-xl">
 					<div className="card-body">

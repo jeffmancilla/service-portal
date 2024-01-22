@@ -21,11 +21,8 @@ export default function Portal() {
 							<br />
 							More happy.
 						</h2>
-						<p className="mb-5">
-							We used to be adventurers like you... then we all took an arrow in
-							the knee. Come forth with your bow and sword and allow us to live
-							vicariously through you.
-						</p>
+						<p className="mb-5">We used to be adventurers like you</p>
+						<p>...then we all took an arrow in the knee</p>
 						<Unauthenticated>
 							<button className="block mx-auto btn btn-primary">
 								<SignInButton mode="modal" />
@@ -35,9 +32,8 @@ export default function Portal() {
 				</div>
 			</div>
 			<Authenticated>
-				<hr className="my-8" />
-				<div className="flex flex-wrap gap-4 justify-center">
-					<div className="card w-80 bg-base-100 shadow-xl image-full">
+				<div className="mt-10 flex flex-wrap gap-4 justify-between">
+					<div className="card lg:card-side bg-base-100 shadow-xl">
 						<figure>
 							<img src="repair.png" alt="Repair" />
 						</figure>
@@ -47,24 +43,23 @@ export default function Portal() {
 								Missed your target and hit a rock instead? We've got you
 								covered.
 							</p>
-							<div className="card-actions justify-end">
+							<div className="card-actions">
 								<Link to="/repair">
 									<button className="btn btn-primary">Repair</button>
 								</Link>
 							</div>
 						</div>
 					</div>
-					<div className="card w-80 bg-base-100 shadow-xl image-full">
+					<div className="card lg:card-side bg-base-100 shadow-xl">
 						<figure>
 							<img src="enchant.jpeg" alt="Enchant" />
 						</figure>
 						<div className="card-body">
 							<h2 className="card-title">Enchant</h2>
 							<p>
-								Unlock rizzmaster status - magic, fire, lightning, holy enchants
-								available
+								Purchase a weapon enchant and discover what it means to w rizz
 							</p>
-							<div className="card-actions justify-end">
+							<div className="card-actions">
 								<button className="btn btn-ghost">Coming soon</button>
 							</div>
 						</div>
