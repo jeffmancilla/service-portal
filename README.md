@@ -5,7 +5,7 @@ Service Portal is my attempt to replicate a barebones ticketing/service manageme
 - reactivity applies to Convex document updates (real-time messaging)
 - minimal, responsive design
 
-[service-portal-tau.vercel.app](https://service-portal-tau.vercel.app)
+Deployed production link: [service-portal-tau.vercel.app](https://service-portal-tau.vercel.app)
 
 ## Screenshots
 ![portal-hero-card](https://github.com/jeffmancilla/service-portal/assets/54294370/cb32d550-2d64-4753-8ecd-9930464ab2bc)
