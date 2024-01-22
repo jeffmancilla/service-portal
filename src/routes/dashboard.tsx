@@ -222,16 +222,16 @@ export default function Dashboard() {
 									className="collapse border border-base-300 collapse-arrow bg-base-100 mb-2"
 								>
 									<input type="checkbox" className="peer" />
-									<div className="flex gap-2 items-center justify-between  collapse-title bg-base-100 text-base-300 peer-checked:bg-base-100 peer-checked:text-base-300">
+									<div className="flex gap-2 items-center justify-between  collapse-title bg-base-100 text-base-content peer-checked:bg-base-100 peer-checked:text-base-content">
 										<div>
 											<span className="ml-2 font-medium">{customerName}</span>
 											<span className="ml-2">{itemName}</span>
 										</div>
-										<div className="badge badge-ghost text-base-300">
+										<div className="badge badge-ghost">
 											{type.toUpperCase()}
 										</div>
 									</div>
-									<div className="collapse-content bg-base-100 text-base-300 peer-checked:bg-base-100 peer-checked:text-base-300">
+									<div className="collapse-content bg-base-100 text-base-content peer-checked:bg-base-100 peer-checked:text-base-content">
 										<div className="card-body">
 											<h2 className="card-title">Request details</h2>
 											<div className="flex flex-wrap justify-between gap-4">
