@@ -5,7 +5,7 @@ import { Doc } from "../../convex/_generated/dataModel"
 
 export default function ItemCreate() {
 	const createItem = useMutation(api.items.create)
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit, resetField } = useForm()
 
 	const handleDialog = (elementId: string) => {
 		const dialog = document.getElementById(elementId) as HTMLDialogElement
@@ -21,6 +21,9 @@ export default function ItemCreate() {
 		const item = data as Doc<"items">
 		createItem(item)
 		handleDialog("create-item")
+		resetField("name")
+		resetField("level")
+		resetField("type")
 	})
 
 	return (
@@ -37,6 +40,7 @@ export default function ItemCreate() {
 						<label className="form-control w-full ">
 							<div className="label">
 								<span className="label-text">Name</span>
+								<span className="label-text-alt">required</span>
 							</div>
 							<input
 								{...register("name")}
@@ -64,6 +68,7 @@ export default function ItemCreate() {
 							<label className="flex-grow form-control w-full ">
 								<div className="label">
 									<span className="label-text">Type</span>
+									<span className="label-text-alt">required</span>
 								</div>
 								<select
 									{...register("type")}

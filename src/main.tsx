@@ -5,7 +5,6 @@ import { ConvexReactClient } from "convex/react"
 import { ClerkProvider, useAuth } from "@clerk/clerk-react"
 import { ConvexProviderWithClerk } from "convex/react-clerk"
 
-
 import "./index.css"
 
 import Root from "./routes/+root"
@@ -14,6 +13,7 @@ import Requests from "./routes/requests"
 import Portal from "./routes/portal"
 import Repair from "./routes/repair"
 import Dashboard from "./routes/dashboard"
+import { ErrorBoundary } from "@sentry/react"
 
 const router = createBrowserRouter([
 	{
@@ -44,7 +44,8 @@ const router = createBrowserRouter([
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
+	<ErrorBoundary>
+		<React.StrictMode>
 			<ClerkProvider
 				publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
 			>
@@ -52,5 +53,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 					<RouterProvider router={router} />
 				</ConvexProviderWithClerk>
 			</ClerkProvider>
-	</React.StrictMode>
+		</React.StrictMode>
+	</ErrorBoundary>
 )

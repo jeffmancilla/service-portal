@@ -45,9 +45,16 @@ export default function Repair() {
 						<h2 className="card-title">Request repair service</h2>
 						<form onSubmit={onSubmit} className="flex flex-col gap-4">
 							<div className="flex flex-wrap gap-2 items-end">
+								<button
+									className="btn btn-outline"
+									onClick={() => handleDialog("create-item")}
+								>
+									Add weapon
+								</button>
 								<label className="flex-grow form-control">
 									<div className="label">
-										<span className="label-text">Registered weapons</span>
+										<span className="label-text">Registered equipment</span>
+										<span className="label-text-alt">required</span>
 									</div>
 									<select
 										{...register("item")}
@@ -65,16 +72,11 @@ export default function Repair() {
 										))}
 									</select>
 								</label>
-								<button
-									className="btn btn-outline"
-									onClick={() => handleDialog("create-item")}
-								>
-									Add weapon
-								</button>
 							</div>
 							<label className="form-control">
 								<div className="label">
 									<span className="label-text">How did you break it?</span>
+									<span className="label-text-alt">required</span>
 								</div>
 								<textarea
 									{...register("description")}
