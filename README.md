@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Service Portal (working title)
+Service Portal is my attempt to replicate a barebones ticketing/service management service using a modern web framework... while also masquerading as a Souls-like smithing service portal and blacksmith service fulfillment workspace.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- end-to-end typesafety with React TS + Convex
+- reactivity applies to Convex document updates (real-time messaging)
+- minimal, responsive design
 
-Currently, two official plugins are available:
+[service-portal-tau.vercel.app](https://service-portal-tau.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots
+![portal-hero-card](https://github.com/jeffmancilla/service-portal/assets/54294370/cb32d550-2d64-4753-8ecd-9930464ab2bc)
+![auth-clerk-menu](https://github.com/jeffmancilla/service-portal/assets/54294370/62554eab-b27d-4b8e-a3ed-9ad5f39d33ef)
+![task-detail-chat](https://github.com/jeffmancilla/service-portal/assets/54294370/9844086a-497c-492a-a5b6-8a60de762e21)
+![form-modal-item](https://github.com/jeffmancilla/service-portal/assets/54294370/3e453e24-b273-4bd4-8844-0bcb0fad0e0e)
 
-## Expanding the ESLint configuration
+## Stack
+Service Portal was built with lots of ♥ and:
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/)
+- [Convex (backend + db)](https://www.convex.dev/)
+- [Clerk (auth)](https://clerk.com/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [DaisyUI](https://daisyui.com/)
+- [React Router](https://reactrouter.com/)
+- [React Hook Form](https://react-hook-form.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Want to deploy locally?
+1. clone this repo
+2. npm install
+3. set up a [Convex](https://www.convex.dev) account and follow their [Clerk guide](https://docs.convex.dev/auth/clerk) to set up auth
 
-- Configure the top-level `parserOptions` property like this:
+## User flow
+- Customer
+  1. sign in/sign up (Clerk auth)
+  2. open a service request (repair)
+  3. check request status and chat with agents using the My Requests page
+- Agent
+  1. sign in and visit the Admin Dashboard
+  2. check for new tasks, assign tasks to yourself, review open tasks
+  4. communicate with the customers using chat
+  3. fulfill tasks and update state to complete in the task details
+  3. cancel tasks as needed
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Future features
+- dry up components for reusability across roles
+- consumable items for agents
+- ability check system for completing tasks (a la Baldur's Gate 3)
+- replace Convex with a Go backend (API server + postgres)
+- swap to htmx + templ as a replacement to React frontend
+- service catalog
+- admin dashboard
+- role-based access control system
