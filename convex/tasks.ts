@@ -103,23 +103,60 @@ export const update = mutation({
 	},
 })
 
-export const getList = query({
+export const getOpen = query({
 	args: { userId: v.optional(v.id("users")) },
 
 	handler: async (ctx, args) => {
+		console.log("args", args)
 		const tasks = await ctx.db
 			.query("tasks")
 			.filter((q) => q.eq(q.field("customer"), args.userId))
+			.filter((q) => q.eq(q.field("active"), true))
 			.collect()
 		const items = await ctx.db.query("items").collect()
-		const tasksWithItems = tasks.map((task) => {
+		const users = await ctx.db.query("users").collect()
+
+		const populatedTasks = tasks.map((task) => {
 			const item = items.find((item) => item._id === task.item)
-			const itemLabel = !item?.level
-				? item?.name
-				: `${item?.name} +${item?.level}`
-			return { ...task, itemLabel: itemLabel }
+			const customer = users.find((user) => user._id === task.customer)
+			const agent = users.find((user) => user._id === task.agent)
+
+			return {
+				...task,
+				itemName: item?.level ? `${item?.name} +${item?.level}` : item?.name,
+				customerName: customer?.name,
+				agentName: agent?.name,
+			}
 		})
-		return tasksWithItems
+		return populatedTasks
+	},
+})
+export const getClosed = query({
+	args: { userId: v.optional(v.id("users")) },
+
+	handler: async (ctx, args) => {
+		console.log("args", args)
+		const tasks = await ctx.db
+			.query("tasks")
+			.filter((q) => q.eq(q.field("customer"), args.userId))
+			.filter((q) => q.eq(q.field("active"), false))
+			.collect()
+		const items = await ctx.db.query("items").collect()
+		const users = await ctx.db.query("users").collect()
+
+		const populatedTasks = tasks.map((task) => {
+			const item = items.find((item) => item._id === task.item)
+			const customer = users.find((user) => user._id === task.customer)
+			const agent = users.find((user) => user._id === task.agent)
+
+			return {
+				...task,
+				itemName: item?.level ? `${item?.name} +${item?.level}` : item?.name,
+				customerName: customer?.name,
+				agentName: agent?.name,
+			}
+		})
+		return populatedTasks
 	},
 })
 
