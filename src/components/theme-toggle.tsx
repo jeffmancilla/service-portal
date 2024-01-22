@@ -15,7 +15,7 @@ export default function ThemeToggle() {
 				className="theme-controller"
 				checked={isdark}
 				onChange={() => setIsdark(!isdark)}
-                value="fantasy"
+                value="nord"
 			/>
 
 			{/* sun icon */}

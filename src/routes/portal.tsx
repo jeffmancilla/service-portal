@@ -36,8 +36,8 @@ export default function Portal() {
 					</div>
 				</div>
 			</div>
-			<hr className="my-10"/>
 			<Authenticated>
+			<hr className="my-10"/>
 				<div className="flex flex-wrap gap-4 justify-center">
 					<div className="card w-80 bg-base-100 shadow-xl image-full">
 						<figure>

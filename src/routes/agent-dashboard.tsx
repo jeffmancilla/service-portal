@@ -4,10 +4,10 @@ import MessageList from "../components/message-list"
 import MessageSend from "../components/message-send"
 import useStoreUserEffect from "../hooks/useStoreUserEffect"
 
-export default function Requests() {
+export default function AgentDashboard() {
 	const userId = useStoreUserEffect()
 	const ArgsUserId = userId ? { userId: userId } : "skip"
-	const tasks = useQuery(api.tasks.getList, ArgsUserId)
+	const tasks = useQuery(api.tasks.getActive, ArgsUserId)
 
 	return (
 		<>

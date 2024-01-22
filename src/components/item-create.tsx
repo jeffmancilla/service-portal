@@ -2,21 +2,15 @@ import { useForm } from "react-hook-form"
 import { api } from "../../convex/_generated/api"
 import { useMutation } from "convex/react"
 import { Doc } from "../../convex/_generated/dataModel"
-import { useState } from "react"
 
 export default function ItemCreate() {
-	const [convexError, setConvexError] = useState("")
 	const createItem = useMutation(api.items.create)
 	const { register, handleSubmit } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
 		data.level = !data.level ? 0 : parseInt(data.level)
 		const item = data as Doc<"items">
-		try {
-			createItem(item)
-		} catch (error) {
-			setConvexError(error as string)
-		}
+		createItem(item)
 	})
 
 	return (
@@ -55,10 +49,11 @@ export default function ItemCreate() {
 						</div>
 						<select
 							{...register("type")}
-							className="block select select-bordered w-full "
+							className="block select select-bordered w-full"
+							defaultValue=""
 							required
 						>
-							<option value="" disabled selected>
+							<option value="" disabled>
 								Select one
 							</option>
 							<option value="slashing">Slashing</option>
@@ -69,7 +64,6 @@ export default function ItemCreate() {
 				</div>
 
 				<button className="place-self-end btn btn-outline">Add weapon</button>
-				<p className="text-error">{convexError}</p>
 			</form>
 		</>
 	)

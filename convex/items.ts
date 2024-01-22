@@ -2,7 +2,9 @@ import { query, mutation } from "./_generated/server"
 import { v } from "convex/values"
 
 export const get = query({
-	handler: async (ctx) => {
+	args: { userId: v.optional(v.id("users")) },
+
+	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (identity === null) {
 			throw new Error("Unauthenticated call")
@@ -18,7 +20,7 @@ export const get = query({
 		}
 		return await ctx.db
 			.query("items")
-			.filter((q) => q.eq(q.field("owner"), user._id))
+			.filter((q) => q.eq(q.field("owner"), args.userId))
 			.collect()
 	},
 })
