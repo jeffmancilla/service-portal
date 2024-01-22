@@ -2,6 +2,7 @@ import { UserButton } from "@clerk/clerk-react"
 import { AuthLoading, Authenticated, Unauthenticated } from "convex/react"
 import { Link, Outlet } from "react-router-dom"
 import ThemeToggle from "../components/theme-toggle"
+import DashboardLink from "../components/dashboard-link"
 
 export default function Root() {
 	return (
@@ -16,6 +17,7 @@ export default function Root() {
 						<nav>
 							<Link to="/requests">My Requests</Link>
 						</nav>
+						<DashboardLink />
 						<ThemeToggle />
 						<UserButton afterSignOutUrl="/" />
 					</Authenticated>
