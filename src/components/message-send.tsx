@@ -5,14 +5,15 @@ import { Id, Doc } from "../../convex/_generated/dataModel"
 
 export default function MessageSend({ taskId }: { taskId: Id<"tasks"> }) {
 	const createMessage = useMutation(api.messages.create)
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit, resetField } = useForm()
 
 	const onSubmit = handleSubmit((data) => {
 		data.to = taskId
 		createMessage(data as Doc<"messages">)
+		resetField("text")
 	})
 
-	return (
+	return (	
 		<form onSubmit={onSubmit} className="flex flex-col gap-2 w-full">
 			<textarea
 				{...register("text")}

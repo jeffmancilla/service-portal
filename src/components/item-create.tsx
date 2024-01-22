@@ -81,7 +81,7 @@ export default function ItemCreate() {
 							</label>
 						</div>
 
-						<button className="place-self-end btn btn-outline">
+						<button className="place-self-end btn btn-neutral">
 							Add weapon
 						</button>
 					</form>

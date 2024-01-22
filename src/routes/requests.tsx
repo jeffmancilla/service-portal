@@ -111,7 +111,7 @@ export default function Requests() {
 									className="collapse collapse-arrow bg-base-200 mb-2"
 								>
 									<input type="checkbox" className="peer" />
-									<div className="flex gap-2 items-center justify-between  collapse-title bg-base-100 text-base-300 peer-checked:bg-base-100 peer-checked:text-base-300">
+									<div className="flex gap-2 items-center justify-between  collapse-title bg-base-200 text-base-content peer-checked:bg-base-200 peer-checked:text-base-content">
 										<div>
 											<div className="badge badge-ghost">
 												{type.toUpperCase()}
@@ -120,7 +120,7 @@ export default function Requests() {
 										</div>
 										<div>{new Date(_creationTime).toLocaleDateString()}</div>
 									</div>
-									<div className="collapse-content bg-base100 text-base-300 peer-checked:bg-base-100 peer-checked:text-base-300">
+									<div className="collapse-content bg-base-200 text-base-content peer-checked:bg-base-200 peer-checked:text-base-content">
 										<div className="card-body">
 											<h2 className="card-title">Request details</h2>
 											<div className="flex flex-wrap justify-between gap-4">

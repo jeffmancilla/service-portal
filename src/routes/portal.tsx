@@ -1,5 +1,5 @@
 import { SignInButton } from "@clerk/clerk-react"
-import { Authenticated, Unauthenticated, AuthLoading } from "convex/react"
+import { Authenticated, Unauthenticated } from "convex/react"
 import { Link } from "react-router-dom"
 
 export default function Portal() {
@@ -31,44 +31,40 @@ export default function Portal() {
 					</div>
 				</div>
 			</div>
-			<Authenticated>
-				<div className="mt-10 flex flex-wrap gap-4 justify-between">
-					<div className="card lg:card-side bg-base-100 shadow-xl">
-						<figure>
-							<img src="repair.png" alt="Repair" />
-						</figure>
-						<div className="card-body">
-							<h2 className="card-title">Next-day repair service</h2>
-							<p>
-								Missed your target and hit a rock instead? We've got you
-								covered.
-							</p>
-							<div className="card-actions">
+			<div className="mt-10 flex flex-wrap gap-4 justify-between">
+				<div className="card lg:card-side bg-base-100 shadow-xl">
+					<figure>
+						<img src="repair.png" alt="Repair" />
+					</figure>
+					<div className="card-body">
+						<h2 className="card-title">Next-day repair service</h2>
+						<p>
+							Missed your target and hit a rock instead? We've got you covered.
+						</p>
+						<div className="card-actions">
+							<Authenticated>
 								<Link to="/repair">
 									<button className="btn btn-primary">Repair</button>
 								</Link>
-							</div>
-						</div>
-					</div>
-					<div className="card lg:card-side bg-base-100 shadow-xl">
-						<figure>
-							<img src="enchant.jpeg" alt="Enchant" />
-						</figure>
-						<div className="card-body">
-							<h2 className="card-title">Enchant</h2>
-							<p>
-								Purchase a weapon enchant and discover what it means to w rizz
-							</p>
-							<div className="card-actions">
-								<button className="btn btn-ghost">Coming soon</button>
-							</div>
+							</Authenticated>
 						</div>
 					</div>
 				</div>
-			</Authenticated>
-			<AuthLoading>
-				<span className="block my-5 mx-auto loading loading-dots loading-xs"></span>
-			</AuthLoading>
+				<div className="card lg:card-side bg-base-100 shadow-xl">
+					<figure>
+						<img src="enchant.jpeg" alt="Enchant" />
+					</figure>
+					<div className="card-body">
+						<h2 className="card-title">Enchant (coming soon)</h2>
+						<p>
+							Purchase a weapon enchant and discover what it means to w rizz!
+						</p>
+						<div className="card-actions">
+							{/* <button className="btn btn-ghost">Enchant</button> */}
+						</div>
+					</div>
+				</div>
+			</div>
 		</>
 	)
 }

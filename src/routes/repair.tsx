@@ -47,7 +47,7 @@ export default function Repair() {
 							<div className="flex flex-wrap gap-2 items-end">
 								<label className="flex-grow form-control">
 									<div className="label">
-										<span className="label-text">My weapons</span>
+										<span className="label-text">Registered weapons</span>
 									</div>
 									<select
 										{...register("item")}
@@ -56,7 +56,7 @@ export default function Repair() {
 										defaultValue=""
 									>
 										<option value="" className="base-300" disabled>
-											Select weapon
+											Select one
 										</option>
 										{items?.map(({ _id, name, level }) => (
 											<option key={_id} value={_id}>
