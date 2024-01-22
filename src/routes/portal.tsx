@@ -21,10 +21,10 @@ export default function Portal() {
 							<br />
 							More happy.
 						</h2>
-						<p className="mb-5">We used to be adventurers like you</p>
+						<p>We used to be adventurers like you</p>
 						<p>...then we all took an arrow in the knee</p>
 						<Unauthenticated>
-							<button className="block mx-auto btn btn-primary">
+							<button className="mt-10 block mx-auto btn btn-primary">
 								<SignInButton mode="modal" />
 							</button>
 						</Unauthenticated>
