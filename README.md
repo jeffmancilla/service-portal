@@ -1,5 +1,5 @@
 # Service Portal (working title)
-Service Portal is an attempt to replicate a barebones ticketing/service management platform using a modern web framework... while also masquerading as a Souls-like blacksmith service fulfillment workspace.
+Service Portal is an attempt to replicate a barebones ticketing/service management platform using a modern web framework... while also masquerading as a Souls-like blacksmith service: complete with a customer portal and an agent fulfillment workspace.
 
 - end-to-end typesafety with React TypeScript + Convex backend
 - reactivity applies to all database queries (real-time messaging, task changes, etc.)
