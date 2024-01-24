@@ -1,8 +1,9 @@
 # Service Portal (working title)
-Service Portal is my attempt to replicate a barebones ticketing/service management service using a modern web framework... while also masquerading as a Souls-like smithing service portal and blacksmith service fulfillment workspace.
+Service Portal is an attempt to replicate a barebones ticketing/service management platform using a modern web framework... while also masquerading as a Souls-like blacksmith service fulfillment workspace.
 
-- end-to-end typesafety with React TS + Convex
-- reactivity applies to Convex document updates (real-time messaging)
+- end-to-end typesafety with React TypeScript + Convex backend
+- reactivity applies to all database queries (real-time messaging, task changes, etc.)
+- Social SSOs (Discord, Google, TikTok)
 - minimal, responsive design
 
 Deployed production link: [service-portal-tau.vercel.app](https://service-portal-tau.vercel.app)
@@ -18,8 +19,8 @@ Service Portal was built with lots of ♥ and:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
 - [React](https://react.dev/)
-- [Convex (backend + db)](https://www.convex.dev/)
-- [Clerk (auth)](https://clerk.com/)
+- [Convex](https://www.convex.dev/)
+- [Clerk](https://clerk.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [DaisyUI](https://daisyui.com/)
 - [React Router](https://reactrouter.com/)
