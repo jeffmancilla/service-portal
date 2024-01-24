@@ -3,7 +3,7 @@ Service Portal is an attempt to replicate a barebones ticketing/service manageme
 
 - end-to-end typesafety with React TypeScript + Convex backend
 - reactivity applies to all database queries (real-time messaging, task changes, etc.)
-- Social SSOs (Discord, Google, TikTok)
+- Authentication with Social SSOs (Discord, Google, TikTok)
 - minimal, responsive design
 
 Deployed production link: [service-portal-tau.vercel.app](https://service-portal-tau.vercel.app)
